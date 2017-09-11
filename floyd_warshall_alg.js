@@ -1,4 +1,5 @@
 const assert = require('assert');
+const { createNDimArray, copyNDimArray } = require('./ndim_arr');
 
 // Floyd-Warshall algorithm (unoptimized version)
 function floyd_warshall_alg_1(adj_matrix) {
@@ -122,26 +123,6 @@ function reconstructPath(u, v, next) {
 		path.push(u = next[u][v]);
 
 	return path;
-}
-
-function createNDimArray([firstDim, ...restDims], defaultValue) {
-	if(firstDim === undefined) {
-		return undefined;
-	} else if(restDims.length === 0) {
-		return Array(firstDim).fill(defaultValue);
-	} else {
-		return [...Array(firstDim)].map(
-			() => createNDimArray([...restDims], defaultValue)
-		);
-	}
-}
-
-function copyNDimArray(nDimArray) {
-	if(nDimArray instanceof Array) {
-		return nDimArray.map((e) => copyNDimArray(e))
-	} else {
-		return nDimArray;
-	}
 }
 
 function test() {
