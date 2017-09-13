@@ -34,13 +34,17 @@ function consecutive_matrix_multiplication(matrix_sizes) {
 	return { cost_matrix: dp_cost, firsttail_matrix: dp_firsttail };
 }
 
-function reconstructOrder(i, j, firsttail) {
-	if(i === j)
-		return i;
-	return [
-		reconstructOrder(i, firsttail[i][j], firsttail),
-		reconstructOrder(firsttail[i][j]+1, j, firsttail)
-	];
+function reconstructOrder(i, j, firsttail_matrix) {
+	return reconstructOrder_sub(i, j);
+
+	function reconstructOrder_sub(i, j) {
+		if(i === j)
+			return i;
+		return [
+			reconstructOrder_sub(i, firsttail_matrix[i][j]),
+			reconstructOrder_sub(firsttail_matrix[i][j]+1, j)
+		];
+	}
 }
 
 function test() {
