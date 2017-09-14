@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { createNDimArray } = require('./ndim_arr');
+const { createNDimArray } = require('../util/ndim_arr');
 
 // Optimal binary searching tree
 function optimal_bst(access_prob) {

@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { createNDimArray, copyNDimArray } = require('./ndim_arr');
+const { createNDimArray, copyNDimArray } = require('../util/ndim_arr');
 
 // Floyd-Warshall algorithm (unoptimized version)
 function floyd_warshall_alg_1(adj_matrix) {
@@ -7,8 +7,8 @@ function floyd_warshall_alg_1(adj_matrix) {
 
 	/*
 		dp_distance[k][i][j] =
-		 	distance of shortest path from i to j
-		 	only using nodes in first k nodes (node 0 ~ k-1) as intermediate nodes
+			distance of shortest path from i to j
+			only using nodes in first k nodes (node 0 ~ k-1) as intermediate nodes
 	*/
 	let dp_distance = createNDimArray([n+1, n, n]);
 	dp_distance[0] = copyNDimArray(adj_matrix);
@@ -42,8 +42,8 @@ function floyd_warshall_alg_2(adj_matrix) {
 	let dp_distance = copyNDimArray(adj_matrix);
 	/*
 		dp_distance[i][j] (after k iterations) =
-		 	distance of shortest path from i to j
-		 	only using nodes in first k nodes (node 0 ~ k-1) as intermediate nodes
+			distance of shortest path from i to j
+			only using nodes in first k nodes (node 0 ~ k-1) as intermediate nodes
 
 		[Space usage optimization]
 		Assume there's no negative cycle (dp_distance[x][x] == 0).

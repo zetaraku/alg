@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { createNDimArray } = require('./ndim_arr');
+const { createNDimArray } = require('../util/ndim_arr');
 const FIRST = 0, SECOND = 1;
 
 // Consecutive matrix multiplication
