@@ -5,7 +5,10 @@ const { createNDimArray } = require('../util/ndim_arr');
 function optimal_bst(access_prob) {
 	let n = access_prob.length;
 
-	// period_access_prob[i] - period_access_prob[j] == sum of access_prob[i, j)
+	/*
+		(period_access_prob[i] - period_access_prob[j]) =
+			sum of access_prob [i, j)
+	*/
 	let period_access_prob = Array(n+1);
 	period_access_prob[n] = 0;
 	for(let i = n-1, acc = 0; i >= 0; i--) {
@@ -13,13 +16,20 @@ function optimal_bst(access_prob) {
 		period_access_prob[i] = acc;
 	}
 
-	// Left-closed, right-open indexed
+	/*
+		dp_cost[i][j] =
+			least search cost of interval [i, j)
+	*/
 	let dp_cost = createNDimArray([n+1, n+1]);
+
+	/*
+		dp_rootnode[i][j] =
+			the root node of the nodes in interval [i, j) which has the least search cost
+	*/
 	let dp_rootnode = createNDimArray([n+1, n+1]);
 
-	for(let d = 0; d <= n; d++) {
-		dp_cost[d][d] = 0;
-	}
+	for(let i = 0; i <= n; i++)
+		dp_cost[i][i] = 0;
 
 	for(let d = 1; d <= n; d++) {
 		for(let s = 0; s <= n - d; s++) {
@@ -62,7 +72,7 @@ function test() {
 
 	// assume the data sum to 100% probability
 	let total_base = access_prob.reduce((a, b) => a + b, 0);
-	// or set base manually
+	// or set the base manually
 	// let total_base = 1;
 
 	let expected_result = {

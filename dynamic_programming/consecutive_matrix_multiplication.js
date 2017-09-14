@@ -6,11 +6,20 @@ const FIRST = 0, SECOND = 1;
 function consecutive_matrix_multiplication(matrix_sizes) {
 	let n = matrix_sizes.length - 1;
 
+	/*
+		dp_cost[i][j] =
+			least multiplication cost of interval [i, j]
+	*/
 	let dp_cost = createNDimArray([n, n]);
+
+	/*
+		dp_firsttail[i][j] =
+			tail of the first interval of interval [i, j] which has the least multiplication cost
+	*/
 	let dp_firsttail = createNDimArray([n, n]);
 
-	for(let d = 0; d < n; d++)
-		dp_cost[d][d] = 0;
+	for(let i = 0; i < n; i++)
+		dp_cost[i][i] = 0;
 
 	for(let d = 1; d < n; d++) {
 		for(let s = 0; s < n - d; s++) {
