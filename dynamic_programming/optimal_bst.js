@@ -35,10 +35,10 @@ function optimal_bst(access_prob) {
 		for(let s = 0; s <= n - d; s++) {
 			let i = s, j = s + d;
 			dp_cost[i][j] = +Infinity;
+			let cmp_cost = (
+				period_access_prob[i] - period_access_prob[j]
+			);
 			for(let k = i; k < j; k++) {
-				let cmp_cost = (
-					period_access_prob[i] - period_access_prob[j]
-				);
 				let cost = (dp_cost[i][k] + dp_cost[k+1][j]) + cmp_cost;
 				if(cost < dp_cost[i][j]) {
 					dp_cost[i][j] = cost;
