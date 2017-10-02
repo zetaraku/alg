@@ -118,11 +118,11 @@ function floyd_warshall_alg_3(adj_matrix) {
 }
 
 function reconstructPath(u, v, nextnode_matrix) {
-	let path = [u]
+	let _path = [u]
 	while(u !== v)
-		path.push(u = nextnode_matrix[u][v]);
+		_path.push(u = nextnode_matrix[u][v]);
 
-	return path;
+	return _path;
 }
 
 function test() {
