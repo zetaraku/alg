@@ -47,47 +47,53 @@ function traveling_salesman(adj_matrix) {
 		}
 	}
 
-	return { distance_matrix: dp_distance_to_0, nextnode_matrix: dp_nextnode_to_0 };
-}
+	return {
+		min_distance: dp_distance_to_0[0][bitwise_minus(ALL_NODES, 0)],
+		shortest_path: reconstructPath(dp_nextnode_to_0, ALL_NODES),
+		distance_matrix: dp_distance_to_0,
+		nextnode_matrix: dp_nextnode_to_0,
+	};
 
-function reconstructPath(nextnode_matrix, all_nodes) {
-	let i = 0, S = bitwise_minus(all_nodes, 0);
+	function reconstructPath(nextnode_matrix, all_nodes) {
+		let i = 0, S = bitwise_minus(all_nodes, 0);
 
-	let _path = [0];
-	while(S !== 0) {
-		i = nextnode_matrix[i][S];
-		S = bitwise_minus(S, i);
-		_path.push(i);
+		let _path = [0];
+		while(S !== 0) {
+			i = nextnode_matrix[i][S];
+			S = bitwise_minus(S, i);
+			_path.push(i);
+		}
+
+		return _path;
 	}
 
-	return _path;
-}
-
-function* chooseFromSet(S, k) {
-	if(k === 0) {
-		yield 0;
-	} else if(S === 0) {
-		return;
-	} else {
-		for(let value of chooseFromSet(S >>> 1, k))
-			yield (value << 1) | 0;
-		if((S & 1) !== 0) {
-			for(let value of chooseFromSet(S >>> 1, k-1))
-				yield (value << 1) | 1;
+	function* chooseFromSet(S, k) {
+		if(k === 0) {
+			yield 0;
+		} else if(S === 0) {
+			return;
+		} else {
+			for(let value of chooseFromSet(S >>> 1, k))
+				yield (value << 1) | 0;
+			if((S & 1) !== 0) {
+				for(let value of chooseFromSet(S >>> 1, k-1))
+					yield (value << 1) | 1;
+			}
 		}
 	}
-}
-function* enumerate_bitset(S) {
-	let k = 0;
-	while(S !== 0) {
-		if((S & 1) !== 0)
-			yield k;
-		S >>>= 1; k++;
+	function* enumerate_bitset(S) {
+		let k = 0;
+		while(S !== 0) {
+			if((S & 1) !== 0)
+				yield k;
+			S >>>= 1; k++;
+		}
+	}
+	function bitwise_minus(S, nth) {
+		return (S & ~(1 << nth));
 	}
 }
-function bitwise_minus(S, nth) {
-	return (S & ~(1 << nth));
-}
+
 
 function test() {
 	let adj_matrix = [
@@ -98,7 +104,6 @@ function test() {
 	];
 
 	let n = adj_matrix.length;
-	let all_nodes = (1 << n) - 1;
 
 	let expected_result = {
 		min_distance: 21,
@@ -107,14 +112,11 @@ function test() {
 
 	let result = traveling_salesman(adj_matrix);
 
-	let min_distance = result.distance_matrix[0][bitwise_minus(all_nodes, 0)];
-	console.log('min distance:', min_distance);
+	console.log('min distance:', result.min_distance);
+	console.log('path:', result.shortest_path);
 
-	let shortest_path = reconstructPath(result.nextnode_matrix, all_nodes);
-	console.log('path:', shortest_path);
-
-	assert.equal(min_distance, expected_result.min_distance);
-	assert.deepStrictEqual(shortest_path, expected_result.shortest_path);
+	assert.equal(result.min_distance, expected_result.min_distance);
+	assert.deepStrictEqual(result.shortest_path, expected_result.shortest_path);
 }
 
 test();
