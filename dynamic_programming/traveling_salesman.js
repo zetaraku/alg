@@ -34,7 +34,7 @@ function traveling_salesman(adj_matrix) {
 
 	for(let setSize = 1; setSize <= n-1; setSize++) {
 		for(let A of chooseFromSet(bitwise_minus(ALL_NODES, 0), setSize)) {
-			for(let i of enumerate_bitset(~A & ALL_NODES)) {
+			for(let i of enumerate_bitset(bitwise_not(A))) {
 				dp_distance_to_0[i][A] = +Infinity;
 				for(let j of enumerate_bitset(A)) {
 					let distance = adj_matrix[i][j] + dp_distance_to_0[j][bitwise_minus(A, j)];
@@ -91,6 +91,9 @@ function traveling_salesman(adj_matrix) {
 	}
 	function bitwise_minus(S, nth) {
 		return (S & ~(1 << nth));
+	}
+	function bitwise_not(S) {
+		return (~S & ALL_NODES);
 	}
 }
 
