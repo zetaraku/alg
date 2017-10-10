@@ -18,13 +18,13 @@ function prim_alg(adj_matrix) {
 		distance_from_current_tree[i] =
 			min distance of node i to (any node of) the current tree
 	*/
-	let distance_from_current_tree = createNDimArray([n]);
+	let distance_from_current_tree = Array(n);
 
 	/*
 		nearest_node_in_current_tree_to[i] =
 			the nearest node to node i in the current tree
 	*/
-	let nearest_node_in_current_tree_to = createNDimArray([n]);
+	let nearest_node_in_current_tree_to = Array(n);
 
 	const FIRST_NODE = 0;
 	current_tree.nodes.add(FIRST_NODE);
