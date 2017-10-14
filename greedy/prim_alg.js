@@ -35,16 +35,20 @@ function prim_alg(adj_matrix) {
 	}
 
 	while(current_tree.nodes.size < n) {
+		// find the nearest node
 		let min_distance = +Infinity;
 		let selected_node = null;
 		for(let i = 0; i < n; i++) {
 			if(current_tree.nodes.has(i))
 				continue;
-			if(distance_from_current_tree[i] < min_distance || selected_node === null) {
+			if(distance_from_current_tree[i] < min_distance) {
 				min_distance = distance_from_current_tree[i];
 				selected_node = i;
 			}
 		}
+
+		if(selected_node === null)
+			throw new Error('Input graph is not a connected graph.');
 
 		current_tree.nodes.add(selected_node);
 
@@ -55,6 +59,7 @@ function prim_alg(adj_matrix) {
 		current_tree.edges.add(selected_edge);
 		current_tree.cost += min_distance;
 
+		// update the distance and nearest node
 		for(let i = 0; i < n; i++) {
 			if(current_tree.nodes.has(i))
 				continue;
