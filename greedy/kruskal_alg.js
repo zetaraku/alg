@@ -2,6 +2,7 @@ const assert = require('assert');
 const DisjointSet = require('../util/disjoint_set');
 
 // the Kruskal's algorithm to find a minimum spanning tree for a weighted undirected graph
+// Time complexity: O(m lg m), where m = number of edges
 function kruskal_alg(adj_matrix) {
 	let n = adj_matrix.length;
 

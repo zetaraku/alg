@@ -2,6 +2,7 @@ const assert = require('assert');
 const { createNDimArray } = require('../util/ndim_arr');
 
 // the Prim's algorithm to find a minimum spanning tree for a weighted undirected graph
+// Time complexity: O(n^2), where n = number of nodes
 function prim_alg(adj_matrix) {
 	let n = adj_matrix.length;
 
@@ -22,7 +23,7 @@ function prim_alg(adj_matrix) {
 
 	/*
 		nearest_node_in_current_tree_to[i] =
-			the nearest node to node i in the current tree
+			the nearest node (from any node in tree) to node i in the current tree
 	*/
 	let nearest_node_in_current_tree_to = Array(n);
 
