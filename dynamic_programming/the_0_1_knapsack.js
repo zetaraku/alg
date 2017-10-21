@@ -3,6 +3,7 @@ const { createNDimArray } = require('../util/ndim_arr');
 
 // algorithm to solve the 0/1 knapsack problem (bottom-up)
 // Time complexity: O(nW), where n = number of items, W = total capacity
+// Space complexity: O(nW)
 function the_0_1_knapsack_bottom_up({ item_values, item_weights }, total_capacity) {
 	let n = item_values.length;
 	let W = total_capacity;
@@ -89,12 +90,14 @@ function test() {
 	let knapsack_capacity = 30;
 	let expected_result = 200;
 
+	// test the_0_1_knapsack_bottom_up
 	{
 		let result = the_0_1_knapsack_bottom_up(item_data, knapsack_capacity);
 		console.log('max value:', result);
 		assert.strictEqual(result, expected_result);
 	}
 
+	// test the_0_1_knapsack_bidirectional
 	{
 		let result = the_0_1_knapsack_bidirectional(item_data, knapsack_capacity);
 		console.log('max value:', result);

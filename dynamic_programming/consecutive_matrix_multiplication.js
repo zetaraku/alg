@@ -2,7 +2,9 @@ const assert = require('assert');
 const { createNDimArray } = require('../util/ndim_arr');
 const FIRST = 0, SECOND = 1;
 
-// Consecutive matrix multiplication
+// algorithm to find the best order to do consecutive matrix multiplication
+// Time complexity: O(n^3), where n = number of matrix
+// Space complexity: O(n^2)
 function consecutive_matrix_multiplication(matrix_sizes) {
 	let n = matrix_sizes.length - 1;
 

@@ -3,6 +3,9 @@ const { createNDimArray } = require('../util/ndim_arr');
 
 const FROM_UPLEFT = 0, FROM_UP = 1, FROM_LEFT = 2;
 
+// algorithm to solve the sequence alignment problem
+// Time complexity: O(mn), where m = length of string 1, W = length of string 2
+// Space complexity: O(mn)
 function sequence_alignment(s1, s2, { unmatch_penalty = 1, gap_penalty = 2 } = {}) {
 	let m = s1.length, n = s2.length;
 

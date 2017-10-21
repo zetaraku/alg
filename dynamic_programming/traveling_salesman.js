@@ -1,6 +1,9 @@
 const assert = require('assert');
 const { createNDimArray } = require('../util/ndim_arr');
 
+// algorithm to solve the traveling salesman problem
+// Time complexity: O(n^2 2^n), where n = number of nodes
+// Space complexity: O(n 2^n)
 function traveling_salesman_1(adj_matrix) {
 	let n = adj_matrix.length;
 
@@ -97,9 +100,8 @@ function traveling_salesman_1(adj_matrix) {
 	}
 }
 
-/*
-	Use string instead of integer as key so that the size can be arbitrarily large.
-*/
+// traveling_salesman_1 & Use string instead of integer as key
+// so that the size can be arbitrarily large.
 function traveling_salesman_2(adj_matrix) {
 	let n = adj_matrix.length;
 

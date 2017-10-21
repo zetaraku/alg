@@ -1,7 +1,9 @@
 const assert = require('assert');
 const { createNDimArray, copyNDimArray } = require('../util/ndim_arr');
 
-// Floyd-Warshall algorithm (unoptimized version)
+// Floyd-Warshall algorithm (original version)
+// Time complexity: O(n^3), where n = number of nodes
+// Space complexity: O(n^3)
 function floyd_warshall_alg_1(adj_matrix) {
 	let n = adj_matrix.length;
 
@@ -35,7 +37,9 @@ function floyd_warshall_alg_1(adj_matrix) {
 	return dp_distance[n];
 }
 
-// Floyd-Warshall algorithm (optimized version)
+// Floyd-Warshall algorithm (memory optimized version)
+// Time complexity: O(n^3), where n = number of nodes
+// Space complexity: O(n^2)
 function floyd_warshall_alg_2(adj_matrix) {
 	let n = adj_matrix.length;
 
@@ -77,7 +81,7 @@ function floyd_warshall_alg_2(adj_matrix) {
 	return dp_distance;
 }
 
-// Floyd-Warshall algorithm (+ path finding, optimized version)
+// Floyd-Warshall algorithm (floyd_warshall_alg_2 + path finding)
 function floyd_warshall_alg_3(adj_matrix) {
 	let n = adj_matrix.length;
 
@@ -141,23 +145,32 @@ function test() {
 		[3, 4, 6, 4, 0],
 	];
 
-	let result1 = floyd_warshall_alg_1(adj_matrix);
-	assert.deepStrictEqual(result1, expected_result);
+	// test floyd_warshall_alg_1
+	{
+		let result = floyd_warshall_alg_1(adj_matrix);
+		assert.deepStrictEqual(result, expected_result);
+	}
 
-	let result2 = floyd_warshall_alg_2(adj_matrix);
-	assert.deepStrictEqual(result2, expected_result);
+	// test floyd_warshall_alg_2
+	{
+		let result = floyd_warshall_alg_2(adj_matrix);
+		assert.deepStrictEqual(result, expected_result);
+	}
 
-	let result3 = floyd_warshall_alg_3(adj_matrix);
-	assert.deepStrictEqual(result3.distance_matrix, expected_result);
+	// test floyd_warshall_alg_3
+	{
+		let result = floyd_warshall_alg_3(adj_matrix);
+		assert.deepStrictEqual(result.distance_matrix, expected_result);
 
-	let n = adj_matrix.length;
-	for(let i = 0; i < n; i++)
-		for(let j = 0; j < n; j++)
-			console.log(
-				`[${i}, ${j}] ` +
-				reconstructPath(i, j, result3.nextnode_matrix).join(' -> ') +
-				` (${result3.distance_matrix[i][j]})`
-			);
+		let n = adj_matrix.length;
+		for(let i = 0; i < n; i++)
+			for(let j = 0; j < n; j++)
+				console.log(
+					`[${i}, ${j}] ` +
+					reconstructPath(i, j, result.nextnode_matrix).join(' -> ') +
+					` (${result.distance_matrix[i][j]})`
+				);
+	}
 }
 
 test();

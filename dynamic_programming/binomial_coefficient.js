@@ -1,5 +1,8 @@
 const assert = require('assert');
-// Binomial coefficient calculation (optimized version)
+
+// algorithm to calculate binomial coefficient (memory optimized version)
+// Time complexity: O(nk),
+// Space complexity: O(k)
 function binomial_coef(n, k) {
 	if(k > n / 2)
 		k = n - k;

@@ -1,7 +1,9 @@
 const assert = require('assert');
 const { createNDimArray } = require('../util/ndim_arr');
 
-// Optimal binary searching tree
+// algorithm to find the optimal binary searching tree
+// Time complexity: O(n^3), where n = number of nodes
+// Space complexity: O(n^2)
 function optimal_bst(access_prob) {
 	let n = access_prob.length;
 
@@ -14,6 +16,10 @@ function optimal_bst(access_prob) {
 	for(let i = n-1, acc = 0; i >= 0; i--) {
 		acc += access_prob[i];
 		period_access_prob[i] = acc;
+	}
+
+	function access_prob_begin_end(begin, end) {
+		return period_access_prob[begin] - period_access_prob[end];
 	}
 
 	/*
@@ -35,9 +41,7 @@ function optimal_bst(access_prob) {
 		for(let s = 0; s <= n - d; s++) {
 			let i = s, j = s + d;
 			dp_cost[i][j] = +Infinity;
-			let cmp_cost = (
-				period_access_prob[i] - period_access_prob[j]
-			);
+			let cmp_cost = access_prob_begin_end(i, j);
 			for(let k = i; k < j; k++) {
 				let cost = (dp_cost[i][k] + dp_cost[k+1][j]) + cmp_cost;
 				if(cost < dp_cost[i][j]) {
