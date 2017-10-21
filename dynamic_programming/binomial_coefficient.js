@@ -1,3 +1,4 @@
+const assert = require('assert');
 // Binomial coefficient calculation (optimized version)
 function binomial_coef(n, k) {
 	if(k > n / 2)
@@ -12,10 +13,10 @@ function binomial_coef(n, k) {
 }
 
 function test() {
-	console.assert(binomial_coef(0, 0) === 1);
-	console.assert(binomial_coef(10, 0) === 1);
-	console.assert(binomial_coef(10, 10) === 1);
-	console.assert(binomial_coef(25, 17) === 1081575);
+	assert.strictEqual(binomial_coef(0, 0), 1);
+	assert.strictEqual(binomial_coef(10, 0), 1);
+	assert.strictEqual(binomial_coef(10, 10), 1);
+	assert.strictEqual(binomial_coef(25, 17), 1081575);
 }
 
 test();
