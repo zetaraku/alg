@@ -213,7 +213,7 @@ function test() {
 		console.log('min distance:', result.min_distance);
 		console.log('path:', result.shortest_path);
 
-		assert.equal(result.min_distance, expected_result.min_distance);
+		assert.strictEqual(result.min_distance, expected_result.min_distance);
 		assert.deepStrictEqual(result.shortest_path, expected_result.shortest_path);
 	}
 
@@ -224,7 +224,7 @@ function test() {
 		console.log('min distance:', result.min_distance);
 		console.log('path:', result.shortest_path);
 
-		assert.equal(result.min_distance, expected_result.min_distance);
+		assert.strictEqual(result.min_distance, expected_result.min_distance);
 		assert.deepStrictEqual(result.shortest_path, expected_result.shortest_path);
 	}
 }

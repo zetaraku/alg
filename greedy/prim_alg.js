@@ -95,9 +95,9 @@ function test() {
 
 	let result = prim_alg(adj_matrix);
 
-	assert.deepStrictEqual(result, expected_result);
-
 	console.log(result);
+
+	assert.deepStrictEqual(result, expected_result);
 }
 
 test();

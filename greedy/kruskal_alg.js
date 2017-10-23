@@ -70,9 +70,9 @@ function test() {
 
 	let result = kruskal_alg(adj_matrix);
 
-	assert.deepStrictEqual(result, expected_result);
-
 	console.log(result);
+
+	assert.deepStrictEqual(result, expected_result);
 }
 
 test();

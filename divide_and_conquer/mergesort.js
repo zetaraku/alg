@@ -56,6 +56,7 @@ function test() {
 	console.log('before sort:', arr);
 	console.log('after sort:', result);
 	console.log('expected result:', expected_result);
+
 	assert.deepStrictEqual(result, expected_result);
 }
 

@@ -160,7 +160,6 @@ function test() {
 	// test floyd_warshall_alg_3
 	{
 		let result = floyd_warshall_alg_3(adj_matrix);
-		assert.deepStrictEqual(result.distance_matrix, expected_result);
 
 		let n = adj_matrix.length;
 		for(let i = 0; i < n; i++)
@@ -170,6 +169,8 @@ function test() {
 					reconstructPath(i, j, result.nextnode_matrix).join(' -> ') +
 					` (${result.distance_matrix[i][j]})`
 				);
+
+		assert.deepStrictEqual(result.distance_matrix, expected_result);
 	}
 }
 

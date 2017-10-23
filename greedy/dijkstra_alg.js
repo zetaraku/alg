@@ -105,9 +105,9 @@ function test() {
 
 	let result = dijkstra_alg(adj_matrix, 0);
 
-	assert.deepStrictEqual(result, expected_result);
-
 	console.log(result);
+
+	assert.deepStrictEqual(result, expected_result);
 }
 
 test();

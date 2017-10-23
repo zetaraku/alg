@@ -103,7 +103,7 @@ function test() {
 	console.log('\t', alignment.s1);
 	console.log('\t', alignment.s2);
 
-	assert.equal(min_cost, expected_result.min_cost);
+	assert.strictEqual(min_cost, expected_result.min_cost);
 }
 
 test();
