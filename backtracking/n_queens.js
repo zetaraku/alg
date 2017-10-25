@@ -73,9 +73,9 @@ function n_queens(n) {
 // rewrite from a Pascal program by Niklaus Wirth in 1976
 // https://en.wikipedia.org/wiki/Eight_queens_puzzle#Sample_program
 function n_queens_1976(n) {
-	let V = [...Array(n)].fill(true);		// vertical-line 0~(n-1)
-	let A = [...Array(2*n-1)].fill(true);	// diagonal-ascending-line, 0~2(n-1)
-	let F = [...Array(2*n-1)].fill(true);	// diagonal-falling-line, -(n-1)~+(n-1), offset by +(n-1)
+	let V = [...Array(n)].fill(true);		// vertical-line [L: j = c], c = 0~(n-1)
+	let A = [...Array(2*n-1)].fill(true);	// diagonal-ascending-line [L: i+j = c], c = 0~2(n-1)
+	let F = [...Array(2*n-1)].fill(true);	// diagonal-falling-line [L: i-j = c], c = -(n-1)~+(n-1), offset by +(n-1)
 
 	let path_array = [...Array(n)];
 	let results = [];
@@ -86,7 +86,7 @@ function n_queens_1976(n) {
 
 	function sub_queen(i) {
 		for(let j = 0; j <= n; j++) {
-			if(V[j] && A[i+j] && F[i-j+(n-1)]) {	// if no any attacks
+			if(isPromising(i, j)) {	// if no any attacks
 				path_array[i] = j;	// place a queen at (row i, column j)
 				if(i === n-1) {		// found a solution
 					results.push(path_array.map((col, row) => [row, col]));
@@ -97,6 +97,10 @@ function n_queens_1976(n) {
 				}
 			}
 		}
+	}
+
+	function isPromising(i, j) {
+		return V[j] && A[i+j] && F[i-j+(n-1)];
 	}
 }
 

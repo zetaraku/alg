@@ -1,6 +1,7 @@
 const assert = require('assert');
 const PriorityQueue = require('../util/FastPriorityQueue');
 
+// algorithm to build the Huffman tree
 function huffman_coding(dictionary) {
 	// use PriorityQueue as the tree set
 	let treePrioritySet = new PriorityQueue(
