@@ -60,9 +60,11 @@ function n_queens(n) {
 				continue;		// backtrack if any diagonal attacks exist
 
 			path_stack.push([row, col]);	// place a queen at (row, col)
-			if(path_stack.length === n)		// found a solution
+			if(path_stack.length === n) {	// found a solution
 				results.push(path_stack.slice());
-			sub_queen();
+			} else {
+				sub_queen();
+			}
 			path_stack.pop();
 		}
 	}
@@ -86,12 +88,13 @@ function n_queens_1976(n) {
 		for(let j = 0; j <= n; j++) {
 			if(V[j] && A[i+j] && F[i-j+(n-1)]) {	// if no any attacks
 				path_array[i] = j;	// place a queen at (row i, column j)
-				if(i === n-1)		// found a solution
+				if(i === n-1) {		// found a solution
 					results.push(path_array.map((col, row) => [row, col]));
-
-				V[j] = A[i+j] = F[i-j+(n-1)] = false;
-				sub_queen(i+1);
-				V[j] = A[i+j] = F[i-j+(n-1)] = true;
+				} else {
+					V[j] = A[i+j] = F[i-j+(n-1)] = false;
+					sub_queen(i+1);
+					V[j] = A[i+j] = F[i-j+(n-1)] = true;
+				}
 			}
 		}
 	}
