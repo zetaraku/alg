@@ -1,6 +1,7 @@
 const assert = require('assert');
 
 // algorithm to solve the sub of subsets problem
+// Worst Time Complexity: O(2^n), where n = number of items
 function sum_of_subsets(item_weights, total_capacity) {
 	let n = item_weights.length;
 
