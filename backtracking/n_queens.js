@@ -60,11 +60,13 @@ function n_queens(n) {
 				continue;		// backtrack if any diagonal attacks exist
 
 			path_stack.push([row, col]);	// place a queen at (row, col)
+
 			if(path_stack.length === n) {	// found a solution
 				results.push(path_stack.slice());
 			} else {
 				sub_queen();
 			}
+
 			path_stack.pop();
 		}
 	}

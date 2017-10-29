@@ -1,11 +1,11 @@
 const assert = require('assert');
 
-// algorithm to solve the sub of subsets problem
+// algorithm to solve the graph coloring problem
 // Worst Time Complexity: O(m^n), where m = number of colors, n = number of vertexes
 function graph_coloring(adj_matrix, number_of_colors) {
 	let n = adj_matrix.length;
 
-	let color_of_vertex = Array(n);
+	let color_stack_of_vertex = [];
 
 	let results = [];
 
@@ -16,19 +16,22 @@ function graph_coloring(adj_matrix, number_of_colors) {
 	function sub_graph_coloring(i) {
 		for(let colorId = 0; colorId < number_of_colors; colorId++) {
 			if(isPromising(i, colorId)) {
-				color_of_vertex[i] = colorId;
-				if(i === n-1) {
-					results.push(color_of_vertex.slice());
-					continue;
+				color_stack_of_vertex.push(colorId);
+
+				if(color_stack_of_vertex.length === n) {
+					results.push(color_stack_of_vertex.slice());
+				} else {
+					sub_graph_coloring(i+1);
 				}
-				sub_graph_coloring(i+1);
+
+				color_stack_of_vertex.pop();
 			}
 		}
 	}
 
 	function isPromising(i, colorId) {
-		return [...Array(i)].every(
-			(_, j) => !(adj_matrix[i][j] && color_of_vertex[j] === colorId)
+		return color_stack_of_vertex.every(
+			(previousColorId, j) => !(adj_matrix[i][j] && previousColorId === colorId)
 		);
 	}
 }
@@ -41,11 +44,20 @@ function test() {
 		[true, false, true, false],
 	];
 	let number_of_colors = 3;
-	let expected_results_length = 6;
+	let expected_results = [
+		[0, 1, 2, 1],
+		[0, 2, 1, 2],
+		[1, 0, 2, 0],
+		[1, 2, 0, 2],
+		[2, 0, 1, 0],
+		[2, 1, 0, 1],
+	];
 
 	let results = graph_coloring(adj_matrix, number_of_colors);
 
-	assert.strictEqual(results.length, expected_results_lengthp);
+	console.log(results);
+
+	assert.deepStrictEqual(results, expected_results);
 }
 
 test();
