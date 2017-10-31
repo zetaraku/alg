@@ -1,6 +1,6 @@
 const assert = require('assert');
 
-// algorithm to solve the 0/1 knapsack problem
+// algorithm to solve the 0/1 knapsack problem (using backtracking)
 function the_0_1_knapsack({ item_values, item_weights }, total_capacity) {
 	let n = item_values.length;
 

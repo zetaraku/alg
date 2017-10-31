@@ -5,7 +5,8 @@ const PriorityQueue = require('../util/FastPriorityQueue');
 function huffman_coding(dictionary) {
 	// use PriorityQueue as the tree set
 	let treePrioritySet = new PriorityQueue(
-		(a, b) => a.frequency < b.frequency		// compare elements by their frequency
+		// elements having a lower frequency have higher priority
+		(a, b) => a.frequency < b.frequency
 	);
 
 	// make nodes for each symbol in the dictionary
@@ -23,7 +24,7 @@ function huffman_coding(dictionary) {
 
 	// keep merging trees while there are more than 1 tree
 	while(treePrioritySet.size > 1) {
-		// take the two lowest-frequency nodes
+		// take the top two nodes that have the lowest frequency
 		let p = treePrioritySet.poll();
 		let q = treePrioritySet.poll();
 
