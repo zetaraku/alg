@@ -1,4 +1,3 @@
-const assert = require('assert');
 const PriorityQueue = require('../util/FastPriorityQueue');
 
 // algorithm to solve the traveling salesman problem
@@ -129,54 +128,3 @@ function traveling_salesman(adj_matrix) {
 }
 
 module.exports = { traveling_salesman };
-function test() {
-	{
-		let adj_matrix = [
-			[Infinity, 14, 4, 10, 20],
-			[14, Infinity, 7, 8, 7],
-			[4, 5, Infinity, 7, 16],
-			[11, 7, 9, Infinity, 2],
-			[18, 7, 17, 4, Infinity],
-		];
-
-		let expected_result = {
-			min_distance: 30,
-			shortest_path: [0, 3, 4, 1, 2],
-		};
-
-		let result = traveling_salesman(adj_matrix);
-
-		console.log('min distance:', result.min_distance);
-		console.log('path:', result.shortest_path);
-
-		assert.strictEqual(result.min_distance, expected_result.min_distance);
-		assert.deepStrictEqual(result.shortest_path, expected_result.shortest_path);
-	}
-
-	{
-		let adj_matrix = [
-			[Infinity, 3, 93, 13, 33, 9, 57],
-			[4, Infinity, 77, 42, 21, 16, 34],
-			[45, 17, Infinity, 36, 16, 28, 25],
-			[39, 90, 80, Infinity, 56, 7, 91],
-			[28, 46, 88, 33, Infinity, 25, 57],
-			[3, 88, 18, 46, 92, Infinity, 7],
-			[44, 26, 33, 27, 84, 39, Infinity],
-		];
-
-		let expected_result = {
-			min_distance: 126,
-			shortest_path: [0, 3, 5, 6, 2, 4, 1],
-		};
-
-		let result = traveling_salesman(adj_matrix);
-
-		console.log('min distance:', result.min_distance);
-		console.log('path:', result.shortest_path);
-
-		assert.strictEqual(result.min_distance, expected_result.min_distance);
-		assert.deepStrictEqual(result.shortest_path, expected_result.shortest_path);
-	}
-}
-
-test();
