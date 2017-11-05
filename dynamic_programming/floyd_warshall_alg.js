@@ -1,4 +1,3 @@
-const assert = require('assert');
 const { createNDimArray, copyNDimArray } = require('../util/ndim_arr');
 
 // Floyd-Warshall algorithm (original version)
@@ -135,49 +134,3 @@ module.exports = {
 	floyd_warshall_alg_3,
 	reconstructPath,
 };
-function test() {
-	let adj_matrix = [
-		[0, 1, Infinity, 1, 5],
-		[9, 0, 3, 2, Infinity],
-		[Infinity, Infinity, 0, 4, Infinity],
-		[Infinity, Infinity, 2, 0, 3],
-		[3, Infinity, Infinity, Infinity, 0],
-	];
-	let expected_result = [
-		[0, 1, 3, 1, 4],
-		[8, 0, 3, 2, 5],
-		[10, 11, 0, 4, 7],
-		[6, 7, 2, 0, 3],
-		[3, 4, 6, 4, 0],
-	];
-
-	// test floyd_warshall_alg_1
-	{
-		let result = floyd_warshall_alg_1(adj_matrix);
-		assert.deepStrictEqual(result, expected_result);
-	}
-
-	// test floyd_warshall_alg_2
-	{
-		let result = floyd_warshall_alg_2(adj_matrix);
-		assert.deepStrictEqual(result, expected_result);
-	}
-
-	// test floyd_warshall_alg_3
-	{
-		let result = floyd_warshall_alg_3(adj_matrix);
-
-		let n = adj_matrix.length;
-		for(let i = 0; i < n; i++)
-			for(let j = 0; j < n; j++)
-				console.log(
-					`[${i}, ${j}] ` +
-					reconstructPath(i, j, result.nextnode_matrix).join(' -> ') +
-					` (${result.distance_matrix[i][j]})`
-				);
-
-		assert.deepStrictEqual(result.distance_matrix, expected_result);
-	}
-}
-
-test();

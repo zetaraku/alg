@@ -1,4 +1,3 @@
-const assert = require('assert');
 const { createNDimArray } = require('../util/ndim_arr');
 
 // algorithm to solve the traveling salesman problem
@@ -195,42 +194,3 @@ module.exports = {
 	traveling_salesman_1,
 	traveling_salesman_2,
 };
-function test() {
-	let adj_matrix = [
-		[0, 2, 9, Infinity],
-		[1, 0, 6, 4],
-		[Infinity, 7, 0, 8],
-		[6, 3, Infinity, 0],
-	];
-
-	let n = adj_matrix.length;
-
-	let expected_result = {
-		min_distance: 21,
-		shortest_path: [0, 2, 3, 1],
-	};
-
-	// test traveling_salesman_1
-	{
-		let result = traveling_salesman_1(adj_matrix);
-
-		console.log('min distance:', result.min_distance);
-		console.log('path:', result.shortest_path);
-
-		assert.strictEqual(result.min_distance, expected_result.min_distance);
-		assert.deepStrictEqual(result.shortest_path, expected_result.shortest_path);
-	}
-
-	// test traveling_salesman_2
-	{
-		let result = traveling_salesman_2(adj_matrix);
-
-		console.log('min distance:', result.min_distance);
-		console.log('path:', result.shortest_path);
-
-		assert.strictEqual(result.min_distance, expected_result.min_distance);
-		assert.deepStrictEqual(result.shortest_path, expected_result.shortest_path);
-	}
-}
-
-test();

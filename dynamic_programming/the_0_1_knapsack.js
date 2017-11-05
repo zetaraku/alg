@@ -1,4 +1,3 @@
-const assert = require('assert');
 const { createNDimArray } = require('../util/ndim_arr');
 
 // algorithm to solve the 0/1 knapsack problem (bottom-up)
@@ -86,27 +85,3 @@ module.exports = {
 	the_0_1_knapsack_bottom_up,
 	the_0_1_knapsack_bidirectional,
 };
-function test() {
-	let item_data = {
-		item_values: [50, 60, 140],
-		item_weights: [5, 10, 20],
-	};
-	let knapsack_capacity = 30;
-	let expected_result = 200;
-
-	// test the_0_1_knapsack_bottom_up
-	{
-		let result = the_0_1_knapsack_bottom_up(item_data, knapsack_capacity);
-		console.log('max value:', result);
-		assert.strictEqual(result, expected_result);
-	}
-
-	// test the_0_1_knapsack_bidirectional
-	{
-		let result = the_0_1_knapsack_bidirectional(item_data, knapsack_capacity);
-		console.log('max value:', result);
-		assert.strictEqual(result, expected_result);
-	}
-}
-
-test();

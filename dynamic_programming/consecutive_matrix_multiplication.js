@@ -1,4 +1,3 @@
-const assert = require('assert');
 const { createNDimArray } = require('../util/ndim_arr');
 const FIRST = 0, SECOND = 1;
 
@@ -59,39 +58,3 @@ function reconstructOrder(i, j, firsttail_matrix) {
 }
 
 module.exports = { consecutive_matrix_multiplication, reconstructOrder };
-function test() {
-	let matrix_sizes = [5, 2, 3, 4, 6, 7, 8];
-	let n = matrix_sizes.length - 1;
-
-	let expected_result = {
-		cost_matrix: [
-			[0, 30, 64, 132, 226, 348],
-			[undefined, 0, 24, 72, 156, 268],
-			[undefined, undefined, 0, 72, 198, 366],
-			[undefined, undefined, undefined, 0, 168, 392],
-			[undefined, undefined, undefined, undefined, 0, 336],
-			[undefined, undefined, undefined, undefined, undefined, 0]
-		],
-		firsttail_matrix: [
-			[undefined, 0, 0, 0, 0, 0],
-			[undefined, undefined, 1, 2, 3, 4],
-			[undefined, undefined, undefined, 2, 3, 4],
-			[undefined, undefined, undefined, undefined, 3, 4],
-			[undefined, undefined, undefined, undefined, undefined, 4],
-			[undefined, undefined, undefined, undefined, undefined, undefined]
-		],
-		order: [0, [[[[1, 2], 3], 4], 5]]
-	};
-
-	let result = consecutive_matrix_multiplication(matrix_sizes);
-	let order = reconstructOrder(0, n-1, result.firsttail_matrix);
-
-	console.log('min cost:', result.cost_matrix[0][n-1]);
-	console.log('order:', JSON.stringify(order));
-
-	assert.deepStrictEqual(result.cost_matrix, expected_result.cost_matrix);
-	assert.deepStrictEqual(result.firsttail_matrix, expected_result.firsttail_matrix);
-	assert.deepStrictEqual(order, expected_result.order);
-}
-
-test();

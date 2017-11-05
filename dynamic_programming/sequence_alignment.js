@@ -1,4 +1,3 @@
-const assert = require('assert');
 const { createNDimArray } = require('../util/ndim_arr');
 
 const FROM_UPLEFT = 0, FROM_UP = 1, FROM_LEFT = 2;
@@ -86,25 +85,3 @@ function reconstructPath(s1, s2, choose_matrix) {
 }
 
 module.exports = { sequence_alignment, reconstructPath };
-function test() {
-	let s1 = 'AACAGTTACC', s2 = 'TAAGGTCA';
-	let m = s1.length, n = s2.length;
-
-	let expected_result = {
-		min_cost: 7,
-	};
-
-	let result = sequence_alignment(s1, s2, { unmatch_penalty: 1, gap_penalty: 2 });
-
-	let min_cost = result.cost_matrix[m][n];
-	console.log('min cost:', min_cost);
-
-	let alignment = reconstructPath(s1, s2, result.choose_matrix);
-	console.log('alignment:');
-	console.log('\t', alignment.s1);
-	console.log('\t', alignment.s2);
-
-	assert.strictEqual(min_cost, expected_result.min_cost);
-}
-
-test();

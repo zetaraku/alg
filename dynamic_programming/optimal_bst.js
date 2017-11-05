@@ -1,4 +1,3 @@
-const assert = require('assert');
 const { createNDimArray } = require('../util/ndim_arr');
 
 // algorithm to find the optimal binary searching tree
@@ -71,58 +70,3 @@ function reconstructTree(i, j, rootnode_matrix) {
 }
 
 module.exports = { optimal_bst, reconstructTree };
-function test() {
-	let access_prob = [3, 3, 1, 1];
-	let n = access_prob.length;
-
-	// assume the data sum to 100% probability
-	let total_base = access_prob.reduce((a, b) => a + b, 0);
-	// or set the base manually
-	// let total_base = 1;
-
-	let expected_result = {
-		cost_matrix: [
-			[0, 3, 9, 11, 14],
-			[undefined, 0, 3, 5, 8],
-			[undefined, undefined, 0, 1, 3],
-			[undefined, undefined, undefined, 0, 1],
-			[undefined, undefined, undefined, undefined, 0]
-		],
-		rootnode_matrix: [
-			[undefined, 0, 0, 1, 1],
-			[undefined, undefined, 1, 1, 1],
-			[undefined, undefined, undefined, 2, 2],
-			[undefined, undefined, undefined, undefined, 3],
-			[undefined, undefined, undefined, undefined, undefined]
-		],
-		tree: {
-			key: 1,
-			left: {
-				key: 0,
-				left: null,
-				right: null
-			},
-			right: {
-				key: 2,
-				left: null,
-				right: {
-					key: 3,
-					left: null,
-					right: null
-				}
-			}
-		}
-	};
-
-	let result = optimal_bst(access_prob);
-	let tree = reconstructTree(0, n, result.rootnode_matrix);
-
-	console.log('min cost:', result.cost_matrix[0][n] / total_base);
-	console.log('tree:', JSON.stringify(tree));
-
-	assert.deepStrictEqual(result.cost_matrix, expected_result.cost_matrix);
-	assert.deepStrictEqual(result.rootnode_matrix, expected_result.rootnode_matrix);
-	assert.deepStrictEqual(tree, expected_result.tree);
-}
-
-test();
