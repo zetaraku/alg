@@ -128,6 +128,7 @@ function traveling_salesman(adj_matrix) {
 	}
 }
 
+module.exports = { traveling_salesman };
 function test() {
 	{
 		let adj_matrix = [

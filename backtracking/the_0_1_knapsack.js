@@ -79,6 +79,7 @@ function the_0_1_knapsack({ item_values, item_weights }, total_capacity) {
 	}
 }
 
+module.exports = { the_0_1_knapsack };
 function test() {
 	{
 		let item_data = {

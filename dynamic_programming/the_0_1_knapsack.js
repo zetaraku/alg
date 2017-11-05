@@ -82,6 +82,10 @@ function the_0_1_knapsack_bidirectional({ item_values, item_weights }, total_cap
 	return dp_value[n][W];
 }
 
+module.exports = {
+	the_0_1_knapsack_bottom_up,
+	the_0_1_knapsack_bidirectional,
+};
 function test() {
 	let item_data = {
 		item_values: [50, 60, 140],

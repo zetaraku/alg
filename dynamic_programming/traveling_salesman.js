@@ -191,6 +191,10 @@ function traveling_salesman_2(adj_matrix) {
 	}
 }
 
+module.exports = {
+	traveling_salesman_1,
+	traveling_salesman_2,
+};
 function test() {
 	let adj_matrix = [
 		[0, 2, 9, Infinity],

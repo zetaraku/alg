@@ -15,6 +15,7 @@ function binomial_coef(n, k) {
 	return bc[k];
 }
 
+module.exports = { binomial_coef };
 function test() {
 	assert.strictEqual(binomial_coef(0, 0), 1);
 	assert.strictEqual(binomial_coef(10, 0), 1);

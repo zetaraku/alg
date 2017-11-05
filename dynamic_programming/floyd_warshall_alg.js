@@ -129,6 +129,12 @@ function reconstructPath(u, v, nextnode_matrix) {
 	return _path;
 }
 
+module.exports = {
+	floyd_warshall_alg_1,
+	floyd_warshall_alg_2,
+	floyd_warshall_alg_3,
+	reconstructPath,
+};
 function test() {
 	let adj_matrix = [
 		[0, 1, Infinity, 1, 5],

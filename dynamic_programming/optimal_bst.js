@@ -70,6 +70,7 @@ function reconstructTree(i, j, rootnode_matrix) {
 	}
 }
 
+module.exports = { optimal_bst, reconstructTree };
 function test() {
 	let access_prob = [3, 3, 1, 1];
 	let n = access_prob.length;

@@ -85,6 +85,7 @@ function reconstructPath(s1, s2, choose_matrix) {
 	return { s1: a1, s2: a2 };
 }
 
+module.exports = { sequence_alignment, reconstructPath };
 function test() {
 	let s1 = 'AACAGTTACC', s2 = 'TAAGGTCA';
 	let m = s1.length, n = s2.length;

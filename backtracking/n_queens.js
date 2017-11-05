@@ -78,6 +78,10 @@ function n_queens_1976(n) {
 	}
 }
 
+module.exports = {
+	n_queens,
+	n_queens_1976,
+};
 function test() {
 	assert.strictEqual(n_queens(5).length, 10);
 	assert.strictEqual(n_queens_1976(6).length, 4);

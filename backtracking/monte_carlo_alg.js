@@ -37,6 +37,7 @@ function n_queens_1976_estimated(n) {
 	});
 }
 
+module.exports = { monte_carlo_alg, n_queens_1976_estimated };
 function test() {
 	let N = 20;
 	let n = 8;

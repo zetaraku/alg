@@ -74,6 +74,7 @@ function prim_alg(adj_matrix) {
 	return current_tree;
 }
 
+module.exports = { prim_alg };
 function test() {
 	let adj_matrix = [
 		[0, 1, 3, Infinity, Infinity],

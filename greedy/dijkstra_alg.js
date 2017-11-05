@@ -81,6 +81,7 @@ function dijkstra_alg(adj_matrix, start_node) {
 	return { distance: distance_from_start, prev_node_in_path: prev_node, tree: current_tree };
 }
 
+module.exports = { dijkstra_alg };
 function test() {
 	let adj_matrix = [
 		[0, 7, 4, 6, 1],

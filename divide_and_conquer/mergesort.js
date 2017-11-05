@@ -43,6 +43,7 @@ function mergesort(data, compare) {
 	}
 }
 
+module.exports = { mergesort };
 function test() {
 	let n = 20, range = 100;
 

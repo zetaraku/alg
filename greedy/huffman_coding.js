@@ -43,6 +43,7 @@ function huffman_coding(dictionary) {
 	return treePrioritySet.poll();	// return the only tree
 }
 
+module.exports = { huffman_coding };
 
 function test() {
 	let dictionary = new Map([

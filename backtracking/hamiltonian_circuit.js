@@ -44,6 +44,7 @@ function hamiltonian_circuit(adj_matrix) {
 	}
 }
 
+module.exports = { hamiltonian_circuit };
 function test() {
 	let adj_matrix = [
 		[false, true, true, false, false, false, true, true, false],

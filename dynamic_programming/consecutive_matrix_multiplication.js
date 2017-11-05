@@ -58,6 +58,7 @@ function reconstructOrder(i, j, firsttail_matrix) {
 	}
 }
 
+module.exports = { consecutive_matrix_multiplication, reconstructOrder };
 function test() {
 	let matrix_sizes = [5, 2, 3, 4, 6, 7, 8];
 	let n = matrix_sizes.length - 1;

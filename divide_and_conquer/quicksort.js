@@ -46,6 +46,7 @@ function quicksort(data, compare) {
 	}
 }
 
+module.exports = { quicksort };
 function test() {
 	let n = 20, range = 100;
 

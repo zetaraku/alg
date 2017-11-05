@@ -36,6 +36,7 @@ function graph_coloring(adj_matrix, number_of_colors) {
 	}
 }
 
+module.exports = { graph_coloring };
 function test() {
 	let adj_matrix = [
 		[false, true, true, true],

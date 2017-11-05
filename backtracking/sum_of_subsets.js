@@ -62,6 +62,7 @@ function sum_of_subsets(item_weights, total_capacity) {
 	}
 }
 
+module.exports = { sum_of_subsets };
 function test() {
 	{
 		let item_weights = [5, 6, 10, 11, 16];
