@@ -1,5 +1,3 @@
-const assert = require('assert');
-
 // algorithm to solve the Hamiltonian circuit problem
 // Worst Time Complexity: O(n^n), n = number of vertexes
 function hamiltonian_circuit(adj_matrix) {
@@ -45,33 +43,3 @@ function hamiltonian_circuit(adj_matrix) {
 }
 
 module.exports = { hamiltonian_circuit };
-function test() {
-	let adj_matrix = [
-		[false, true, true, false, false, false, true, true, false],
-		[true, false, true, false, false, false, true, true, false],
-		[true, true, false, true, false, true, false, false, false],
-		[false, false, true, false, true, false, false, false, false],
-		[false, false, false, true, false, true, false, false, false],
-		[false, false, true, false, true, false, true, false, false],
-		[true, true, false, false, false, true, false, true, false],
-		[true, true, false, false, false, false, true, false, false],
-	];
-	let expected_results = [
-		[0, 1, 2, 3, 4, 5, 6, 7],
-		[0, 1, 7, 6, 5, 4, 3, 2],
-		[0, 2, 3, 4, 5, 6, 1, 7],
-		[0, 2, 3, 4, 5, 6, 7, 1],
-		[0, 6, 5, 4, 3, 2, 1, 7],
-		[0, 7, 1, 2, 3, 4, 5, 6],
-		[0, 7, 1, 6, 5, 4, 3, 2],
-		[0, 7, 6, 5, 4, 3, 2, 1],
-	]
-
-	let results = hamiltonian_circuit(adj_matrix);
-
-	console.log(results);
-
-	assert.deepStrictEqual(results, expected_results);
-}
-
-test();

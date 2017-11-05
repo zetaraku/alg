@@ -1,5 +1,3 @@
-const assert = require('assert');
-
 // algorithm to solve the sub of subsets problem
 // Worst Time Complexity: O(2^n), where n = number of items
 function sum_of_subsets(item_weights, total_capacity) {
@@ -63,42 +61,3 @@ function sum_of_subsets(item_weights, total_capacity) {
 }
 
 module.exports = { sum_of_subsets };
-function test() {
-	{
-		let item_weights = [5, 6, 10, 11, 16];
-		let total_capacity = 21;
-		let expected_results = [
-			new Set([0, 1, 2]),
-			new Set([0, 4]),
-			new Set([2, 3]),
-		];
-
-		let results = sum_of_subsets(item_weights, total_capacity);
-
-		assert.deepStrictEqual(results.length, expected_results.length);
-	}
-	{
-		let item_weights = [2, 4, 5];
-		let total_capacity = 6;
-		let expected_results = [
-			new Set([0, 1]),
-		];
-
-		let results = sum_of_subsets(item_weights, total_capacity);
-
-		assert.deepStrictEqual(results.length, expected_results.length);
-	}
-	{
-		let item_weights = [3, 4, 5, 6];
-		let total_capacity = 13;
-		let expected_results = [
-			new Set([0, 1, 3]),
-		];
-
-		let results = sum_of_subsets(item_weights, total_capacity);
-
-		assert.deepStrictEqual(results.length, expected_results.length);
-	}
-}
-
-test();

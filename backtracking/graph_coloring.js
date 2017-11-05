@@ -1,5 +1,3 @@
-const assert = require('assert');
-
 // algorithm to solve the graph coloring problem
 // Worst Time Complexity: O(m^n), where m = number of colors, n = number of vertexes
 function graph_coloring(adj_matrix, number_of_colors) {
@@ -37,28 +35,3 @@ function graph_coloring(adj_matrix, number_of_colors) {
 }
 
 module.exports = { graph_coloring };
-function test() {
-	let adj_matrix = [
-		[false, true, true, true],
-		[true, false, true, false],
-		[true, true, false, true],
-		[true, false, true, false],
-	];
-	let number_of_colors = 3;
-	let expected_results = [
-		[0, 1, 2, 1],
-		[0, 2, 1, 2],
-		[1, 0, 2, 0],
-		[1, 2, 0, 2],
-		[2, 0, 1, 0],
-		[2, 1, 0, 1],
-	];
-
-	let results = graph_coloring(adj_matrix, number_of_colors);
-
-	console.log(results);
-
-	assert.deepStrictEqual(results, expected_results);
-}
-
-test();

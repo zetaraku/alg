@@ -1,4 +1,3 @@
-const assert = require('assert');
 const SkippingLinkedList = require('../util/SkippingLinkedList');
 
 // algorithm to find the solutions of the 'eight queens puzzle'
@@ -82,13 +81,3 @@ module.exports = {
 	n_queens,
 	n_queens_1976,
 };
-function test() {
-	assert.strictEqual(n_queens(5).length, 10);
-	assert.strictEqual(n_queens_1976(6).length, 4);
-	assert.strictEqual(n_queens(7).length, 40);
-	assert.strictEqual(n_queens_1976(8).length, 92);
-
-	assert.deepStrictEqual(n_queens(7), n_queens_1976(7));
-}
-
-test();

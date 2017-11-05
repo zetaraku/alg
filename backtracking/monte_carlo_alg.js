@@ -38,14 +38,3 @@ function n_queens_1976_estimated(n) {
 }
 
 module.exports = { monte_carlo_alg, n_queens_1976_estimated };
-function test() {
-	let N = 20;
-	let n = 8;
-	let estimated_nodes = 0;
-	for(let i = 0; i < N; i++) {
-		estimated_nodes += n_queens_1976_estimated(n);
-	}
-	console.log(estimated_nodes / N);	// ~16450, actual: 17694
-}
-
-test();
