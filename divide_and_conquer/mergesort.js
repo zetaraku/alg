@@ -1,5 +1,3 @@
-const assert = require('assert');
-
 // Merge Sort (stable)
 function mergesort(data, compare) {
 	if(compare === undefined)
@@ -44,21 +42,3 @@ function mergesort(data, compare) {
 }
 
 module.exports = { mergesort };
-function test() {
-	let n = 20, range = 100;
-
-	let arr = [...Array(n)].map(() => Math.floor(range * Math.random()));
-	let expected_result = arr.slice();
-		expected_result.sort((a, b) => a - b);
-
-	let result = arr.slice();
-		mergesort(result, (a, b) => a - b);
-
-	console.log('before sort:', arr);
-	console.log('after sort:', result);
-	console.log('expected result:', expected_result);
-
-	assert.deepStrictEqual(result, expected_result);
-}
-
-test();
