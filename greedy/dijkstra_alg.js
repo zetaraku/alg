@@ -1,5 +1,3 @@
-const assert = require('assert');
-
 // Dijkstra's algorithm (similar to prim_alg.js)
 // Time complexity: O(n^2), where n = number of nodes
 // * There exists another implementation for better time complexity by using heap
@@ -82,33 +80,3 @@ function dijkstra_alg(adj_matrix, start_node) {
 }
 
 module.exports = { dijkstra_alg };
-function test() {
-	let adj_matrix = [
-		[0, 7, 4, 6, 1],
-		[Infinity, 0, Infinity, Infinity, Infinity],
-		[Infinity, 2, 0, 5, Infinity],
-		[Infinity, 3, Infinity, 0, Infinity],
-		[Infinity, Infinity, Infinity, 1, 0],
-	];
-	let expected_result = {
-		distance: [0, 5, 4, 2, 1],
-		prev_node_in_path: [null, 3, 0, 4, 0],
-		tree: {
-			nodes: new Set([0, 1, 2, 3, 4]),
-			edges: new Set([
-				[0, 4],
-				[4, 3],
-				[0, 2],
-				[3, 1],
-			]),
-		},
-	};
-
-	let result = dijkstra_alg(adj_matrix, 0);
-
-	console.log(result);
-
-	assert.deepStrictEqual(result, expected_result);
-}
-
-test();
