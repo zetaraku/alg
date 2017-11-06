@@ -22,7 +22,7 @@ describe('chap.05 backtracking', function() {
 	describe('monte_carlo_alg', function() {
 		let { monte_carlo_alg, n_queens_1976_estimated } = require('../backtracking/monte_carlo_alg');
 
-		it.skip('check manually', function() {
+		it('! please check manually', function() {
 			let N = 20;
 			let n = 8;
 			let estimated_nodes = 0;
@@ -30,7 +30,7 @@ describe('chap.05 backtracking', function() {
 				estimated_nodes += n_queens_1976_estimated(n);
 			}
 
-			console.log(estimated_nodes / N);	// ~16450, actual: 17694
+			// console.log(estimated_nodes / N);	// ~16450, actual: 17694
 		});
 	});
 	describe('sum_of_subsets', function() {
