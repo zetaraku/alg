@@ -9,10 +9,11 @@
   "dependencies": {},
   "devDependencies": {
     "chai": "^4.1.2",
-    "mocha": "^4.0.1"
+    "mocha": "^4.0.1",
+    "nyc": "^11.3.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "nyc --reporter=lcov mocha"
   },
   "repository": {
     "type": "git",
