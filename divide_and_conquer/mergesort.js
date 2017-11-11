@@ -16,6 +16,10 @@ function mergesort(data, compare) {
 	}
 
 	function merge(begin, mid, end) {
+		// data[i] or data[j] will be invalid if any interval is empty
+		if(begin >= mid || mid >= end)
+			return;		// if so, simply do nothing
+
 		let i = begin, j = mid;
 		let k = begin;
 		while(true) {
