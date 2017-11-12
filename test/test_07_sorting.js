@@ -57,4 +57,14 @@ describe('chap.07 sorting', function() {
 			assert.deepStrictEqual(result, expected_result);
 		});
 	});
+	describe('heap_sort', function() {
+		let { heap_sort } = require('../sorting/heap_sort');
+
+		it('should do heap_sort (unstable)', function() {
+			let result = arr.slice();
+				heap_sort(result);
+
+			assert.deepStrictEqual(result, expected_result);
+		});
+	});
 });
