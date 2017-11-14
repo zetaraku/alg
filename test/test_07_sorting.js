@@ -57,6 +57,16 @@ describe('chap.07 sorting', function() {
 			assert.deepStrictEqual(result, expected_result);
 		});
 	});
+	describe('quick_sort', function() {
+		let { quick_sort_bidirectional } = require('../sorting/quick_sort');
+
+		it('should do quick_sort_bidirectional (unstable)', function() {
+			let result = arr.slice();
+				quick_sort_bidirectional(result);
+
+			assert.deepStrictEqual(result, expected_result);
+		});
+	});
 	describe('heap_sort', function() {
 		let { heap_sort } = require('../sorting/heap_sort');
 
