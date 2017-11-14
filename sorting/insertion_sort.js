@@ -1,16 +1,17 @@
 // stable
-function insertion_sort(arr) {
-	let n = arr.length;
+function insertion_sort(data) {
+	let n = data.length;
+
 	for(let i = 0; i < n; i++) {
-		let x = arr[i];
-		// arr[i] = null;
+		let x = data[i];
+		// data[i] = null;
 		for(let j = i-1; true; j--) {
-			if(j < 0 || arr[j] <= x) {
-				arr[j+1] = x;
+			if(j < 0 || data[j] <= x) {
+				data[j+1] = x;
 				break;
 			}
-			arr[j+1] = arr[j];
-			// arr[j] = null;
+			data[j+1] = data[j];
+			// data[j] = null;
 		}
 	}
 }

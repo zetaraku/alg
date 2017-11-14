@@ -1,7 +1,8 @@
-// Quick Sort (unstable version)
+// unstable
 function quick_sort_bidirectional(data) {
+	let n = data.length;
 
-	qsort(0, data.length);
+	qsort(0, n);
 
 	function qsort(begin, end) {
 		if(end - begin < 2)

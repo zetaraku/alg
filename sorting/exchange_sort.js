@@ -1,10 +1,11 @@
 // unstable
-function exchange_sort(arr) {
-	let n = arr.length;
+function exchange_sort(data) {
+	let n = data.length;
+
 	for(let i = 0; i < n; i++)
 		for(let j = i+1; j < n; j++)
-			if(arr[j] < arr[i])
-				[arr[i], arr[j]] = [arr[j], arr[i]];
+			if(data[j] < data[i])
+				[data[i], data[j]] = [data[j], data[i]];
 }
 
 module.exports = { exchange_sort };

@@ -4,7 +4,7 @@ function merge_sort_iterative(data) {
 	let lgm = Math.ceil(Math.log2(n));
 	let m = 2 ** lgm;
 
-	let [data_ptr, buffer_ptr] = [data, Array(data.length)];
+	let [data_ptr, buffer_ptr] = [data, Array(n)];
 
 	for(let k = 0; k < lgm; k++) {
 		let size = 2 ** k;

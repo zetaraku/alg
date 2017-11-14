@@ -1,13 +1,14 @@
 // stable
-function selection_sort(arr) {
-	let n = arr.length;
+function selection_sort(data) {
+	let n = data.length;
+
 	for(let i = 0; i < n; i++) {
 		let iMin = i;
 		for(let j = i+1; j < n; j++) {
-			if(arr[j] < arr[iMin])
+			if(data[j] < data[iMin])
 				iMin = j;
 		}
-		[arr[i], arr[iMin]] = [arr[iMin], arr[i]];
+		[data[i], data[iMin]] = [data[iMin], data[i]];
 	}
 }
 
