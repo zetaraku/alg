@@ -1,5 +1,7 @@
+const defaultCompareFunction = (a, b) => (a < b ? -1 : a > b ? +1 : 0);
+
 // unstable
-function quick_sort_bidirectional(data) {
+function quick_sort_bidirectional(data, compare = defaultCompareFunction) {
 	let n = data.length;
 
 	qsort(0, n);
@@ -21,9 +23,9 @@ function quick_sort_bidirectional(data) {
 		[data[j], data[pivot_index]] = [data[pivot_index], data[j]];
 		while(i <= j) {
 			[data[i], data[j]] = [data[j], data[i]];
-			while(i < end && data[i] <= pivot)
+			while(i < end && compare(data[i], pivot) <= 0)
 				i++;
-			while(/* j >= begin && */ data[j] > pivot)
+			while(/* j >= begin && */ compare(data[j], pivot) > 0)
 				j--;
 		}
 		[data[begin], data[j]] = [data[j], data[begin]];

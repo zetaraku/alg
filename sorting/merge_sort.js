@@ -1,5 +1,7 @@
+const defaultCompareFunction = (a, b) => (a < b ? -1 : a > b ? +1 : 0);
+
 // stable
-function merge_sort_iterative(data) {
+function merge_sort_iterative(data, compare = defaultCompareFunction) {
 	let n = data.length;
 	let lgm = Math.ceil(Math.log2(n));
 	let m = 2 ** lgm;
@@ -38,7 +40,7 @@ function merge_sort_iterative(data) {
 		let i = begin, j = mid;
 		let k = begin;
 		while(true) {
-			if(data_ptr[i] <= data_ptr[j]) {
+			if(compare(data_ptr[i], data_ptr[j]) <= 0) {
 				buffer_ptr[k++] = data_ptr[i++];
 				if(i >= mid) {
 					while(j < end)
@@ -58,7 +60,7 @@ function merge_sort_iterative(data) {
 }
 
 // stable
-function merge_sort_modifylink(data) {
+function merge_sort_modifylink(data, compare = defaultCompareFunction) {
 	let n = data.length;
 
 	let next_link = Array(n+1);		// we store the next_link in array index separately from the data
@@ -97,7 +99,7 @@ function merge_sort_modifylink(data) {
 
 		let list1_idx = list1_head, list2_idx = list2_head;
 		while(list1_idx !== null && list2_idx !== null) {
-			if(data[list1_idx] <= data[list2_idx]) {
+			if(compare(data[list1_idx], data[list2_idx]) <= 0) {
 				prev_idx = next_link[prev_idx] = list1_idx;
 				list1_idx = next_link[list1_idx];
 			} else {

@@ -1,5 +1,7 @@
+const defaultCompareFunction = (a, b) => (a < b ? -1 : a > b ? +1 : 0);
+
 // unstable
-function heap_sort(data) {
+function heap_sort(data, compare = defaultCompareFunction) {
 	let n = data.length;
 	let heap_size = n;
 
@@ -27,9 +29,9 @@ function heap_sort(data) {
 	function siftDown(index) {
 		for(let i = index, j; j = i, true; i = j) {
 			let { left, right } = childs(i);
-			if(exists(left) && data[left] > data[j])
+			if(exists(left) && compare(data[left], data[j]) > 0)
 				j = left;
-			if(exists(right) && data[right] > data[j])
+			if(exists(right) && compare(data[right], data[j]) > 0)
 				j = right;
 			if(j === i)
 				return;
