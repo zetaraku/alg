@@ -71,21 +71,21 @@ FastPriorityQueue.prototype.heapify = function (arr) {
 };
 
 // for internal use
-FastPriorityQueue.prototype._percolateUp = function (i) {
-    var myval = this.array[i];
-    var p;
-    var ap;
-    while (i > 0) {
-        p = (i - 1) >> 1;
-        ap = this.array[p];
-        if (!this.compare(myval, ap)) {
-            break;
-        }
-        this.array[i] = ap;
-        i = p;
-    }
-    this.array[i] = myval;
-};
+// FastPriorityQueue.prototype._percolateUp = function (i) {
+//     var myval = this.array[i];
+//     var p;
+//     var ap;
+//     while (i > 0) {
+//         p = (i - 1) >> 1;
+//         ap = this.array[p];
+//         if (!this.compare(myval, ap)) {
+//             break;
+//         }
+//         this.array[i] = ap;
+//         i = p;
+//     }
+//     this.array[i] = myval;
+// };
 
 
 // for internal use
@@ -175,23 +175,23 @@ FastPriorityQueue.prototype.isEmpty = function () {
 };
 
 // just for illustration purposes
-var main = function () {
-    // main code
-    var x = new FastPriorityQueue(function (a, b) {
-        return a < b;
-    });
-    x.add(1);
-    x.add(0);
-    x.add(5);
-    x.add(4);
-    x.add(3);
-    while (!x.isEmpty()) {
-        console.log(x.poll());
-    }
-};
+// var main = function () {
+//     // main code
+//     var x = new FastPriorityQueue(function (a, b) {
+//         return a < b;
+//     });
+//     x.add(1);
+//     x.add(0);
+//     x.add(5);
+//     x.add(4);
+//     x.add(3);
+//     while (!x.isEmpty()) {
+//         console.log(x.poll());
+//     }
+// };
 
-if (require.main === module) {
-    main();
-}
+// if (require.main === module) {
+//     main();
+// }
 
 module.exports = FastPriorityQueue;

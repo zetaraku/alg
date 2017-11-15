@@ -13,7 +13,8 @@
     "nyc": "^11.3.0"
   },
   "scripts": {
-    "test": "nyc --reporter=lcov mocha"
+    "test": "nyc --reporter=lcov mocha",
+    "localtest": "nyc --reporter=html --reporter=text mocha"
   },
   "repository": {
     "type": "git",
