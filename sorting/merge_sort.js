@@ -97,7 +97,7 @@ function merge_sort_modifylink(data) {
 
 		let list1_idx = list1_head, list2_idx = list2_head;
 		while(list1_idx !== null && list2_idx !== null) {
-			if(data[list1_idx] < data[list2_idx]) {
+			if(data[list1_idx] <= data[list2_idx]) {
 				prev_idx = next_link[prev_idx] = list1_idx;
 				list1_idx = next_link[list1_idx];
 			} else {
