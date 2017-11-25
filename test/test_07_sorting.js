@@ -1,38 +1,77 @@
 const assert = require('assert');
 
 class SortTester {
-	constructor({ n = 1000, range = 500, dataGenerator = () => Math.floor(range * Math.random()) }) {
-		this.data = [...Array(n)].map((_, i) => dataGenerator(i));
-		this.compareFunction = (a, b) => (a - b);
-		this.expected_result = this.data.slice();
-		this.expected_result.sort((a, b) => (a - b));
+	constructor(testsets, { compareFunction = (a, b) => (a - b) } = {}) {
+		this.datasets = testsets.map((t) => {
+			let data = [...Array(t.n)].map((_, i) => t.dataGenerator(i));
+			return {
+				data: data,
+				expected_result: data.slice().sort(compareFunction)
+			};
+		});
+		this.compareFunction = compareFunction;
 	}
 
-	test(sortFunction) {
-		let result = this.data.slice();
-		sortFunction(result, this.compareFunction);
-		assert.deepStrictEqual(result, this.expected_result);
+	test(sortFunctionToBeTested) {
+		for(let dataset of this.datasets) {
+			let result = dataset.data.slice();
+			sortFunctionToBeTested(result, this.compareFunction);
+			assert.deepStrictEqual(result, dataset.expected_result);
+		}
+	}
+
+	test_no_compare(sortFunctionToBeTested) {
+		for(let dataset of this.datasets) {
+			let result = dataset.data.slice();
+			sortFunctionToBeTested(result, (e) => e);
+			assert.deepStrictEqual(result, dataset.expected_result);
+		}
 	}
 }
 
 class StableSortTester {
-	constructor({ n = 1000, range = 500, dataGenerator = () => Math.floor(range * Math.random()) }) {
-		this.data = [...Array(n)].map((_, i) => ({ key: dataGenerator(i), order: i }));
-		this.compareFunction = (a, b) => (a.key - b.key);
-		this.expected_result = this.data.slice();
-		this.expected_result.sort((a, b) => (a.key - b.key || a.order - b.order));
+	constructor(testsets, { compareFunction = (a, b) => (a - b) } = {}) {
+		let keyAndOrderCompareFunction = (a, b) => compareFunction(a.key, b.key) || a.order - b.order;
+		this.datasets = testsets.map((t) => {
+			let data = [...Array(t.n)].map((_, i) => ({ key: t.dataGenerator(i), order: i }));
+			return {
+				data: data,
+				expected_result: data.slice().sort(keyAndOrderCompareFunction)
+			};
+		});
+		this.keyCompareFunction = (a, b) => compareFunction(a.key, b.key);
 	}
 
-	test(sortFunction) {
-		let result = this.data.slice();
-		sortFunction(result, this.compareFunction);
-		assert.deepStrictEqual(result, this.expected_result);
+	test(sortFunctionToBeTested) {
+		for(let dataset of this.datasets) {
+			let result = dataset.data.slice();
+			sortFunctionToBeTested(result, this.keyCompareFunction);
+			assert.deepStrictEqual(result, dataset.expected_result);
+		}
+	}
+
+	test_no_compare(sortFunctionToBeTested) {
+		for(let dataset of this.datasets) {
+			let result = dataset.data.slice();
+			sortFunctionToBeTested(result, (e) => e.key);
+			assert.deepStrictEqual(result, dataset.expected_result);
+		}
 	}
 }
 
 describe('chap.07 sorting', function() {
-	let sort_tester = new SortTester({});
-	let stable_sort_tester = new StableSortTester({});
+	let testsets = [
+		{ n: 0, dataGenerator: (i) => null },
+		{ n: 1, dataGenerator: (i) => 0 },
+		{ n: 2, dataGenerator: (i) => i },
+		{ n: 1000, dataGenerator: (i) => 500 },
+		{ n: 1000, dataGenerator: (i) => +i },
+		{ n: 1000, dataGenerator: (i) => -i },
+		{ n: 1000, dataGenerator: (i) => Math.floor(-250 + 500 * Math.random()) },
+	];
+
+	let sort_tester = new SortTester(testsets);
+	let stable_sort_tester = new StableSortTester(testsets);
 
 	describe('insertion_sort', function() {
 		let { insertion_sort } = require('../sorting/insertion_sort');
