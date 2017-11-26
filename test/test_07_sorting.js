@@ -135,4 +135,17 @@ describe('chap.07 sorting', function() {
 			sort_tester.test(heap_sort);
 		});
 	});
+	describe('radix_sort', function() {
+		let {
+			binary_radix_sort_lsd,
+			binary_radix_sort_msd,
+		} = require('../sorting/radix_sort');
+
+		it('should do binary_radix_sort_lsd (stable)', function() {
+			stable_sort_tester.test_no_compare(binary_radix_sort_lsd);
+		});
+		it('should do binary_radix_sort_msd (stable)', function() {
+			stable_sort_tester.test_no_compare(binary_radix_sort_msd);
+		});
+	});
 });
