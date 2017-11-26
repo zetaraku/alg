@@ -14,12 +14,17 @@ function traveling_salesman_1(adj_matrix) {
 	if(n > 30)
 		throw new Error('Max node number exceeded. (max: 30)');
 
+	const EMPTY_SET = 0;
+	const ALL_NODES = (1 << n) - 1;
+
 	/*
 		dp_distance_to_0[i][S] =
 			shortest distance from node i to node 0 using all nodes in S as intermediate nodes once
 		S is a set in bitmask representation which k-th bit is corresponding to k-th node
 	*/
 	let dp_distance_to_0 = createNDimArray([n, 2**n]);
+	for(let i = 0; i < n; i++)
+		dp_distance_to_0[i][EMPTY_SET] = adj_matrix[i][0];
 
 	/*
 		dp_nextnode_to_0[i][S] =
@@ -28,11 +33,6 @@ function traveling_salesman_1(adj_matrix) {
 	*/
 	let dp_nextnode_to_0 = createNDimArray([n, 2**n]);
 
-	const EMPTY_SET = 0;
-	const ALL_NODES = (1 << n) - 1;
-
-	for(let i = 0; i < n; i++)
-		dp_distance_to_0[i][EMPTY_SET] = adj_matrix[i][0];
 
 	for(let setSize = 1; setSize <= n-1; setSize++) {
 		for(let A of chooseFromSet(bitwise_minus(ALL_NODES, 0), setSize)) {
@@ -104,28 +104,22 @@ function traveling_salesman_1(adj_matrix) {
 function traveling_salesman_2(adj_matrix) {
 	let n = adj_matrix.length;
 
+	const EMPTY_SET = '0'.repeat(n);
+	const ALL_NODES = '1'.repeat(n);
+
 	/*
 		dp_distance_to_0[i][S] =
 			shortest distance from node i to node 0 using all nodes in S as intermediate nodes once
 		S is a set in STRING bitmask representation which k-th CHAR ('0'/'1') is corresponding to k-th node
 	*/
-	let dp_distance_to_0 = createNDimArray([n]);
+	let dp_distance_to_0 = [...Array(n)].map((_, i) => ({ [EMPTY_SET]: adj_matrix[i][0] }));
 
 	/*
 		dp_nextnode_to_0[i][S] =
 			the next node of the shortest path if we're at i and want to go to 0
 			using all nodes in S as intermediate nodes once
 	*/
-	let dp_nextnode_to_0 = createNDimArray([n]);
-
-	const EMPTY_SET = '0'.repeat(n);
-	const ALL_NODES = '1'.repeat(n);
-
-	for(let i = 0; i < n; i++) {
-		dp_distance_to_0[i] = {};	// initialize 2nd dimension here
-		dp_distance_to_0[i][EMPTY_SET] = adj_matrix[i][0];
-		dp_nextnode_to_0[i] = {};	// initialize 2nd dimension here
-	}
+	let dp_nextnode_to_0 = [...Array(n)].map(() => ({}));
 
 	for(let setSize = 1; setSize <= n-1; setSize++) {
 		for(let A of chooseFromSet(bitwise_minus(ALL_NODES, 0), setSize)) {
