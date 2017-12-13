@@ -135,10 +135,38 @@ function reconstructPath(u, v, nextnode_matrix) {
 	return _path;
 }
 
+function reconstructSimpleCycle(index, nextnode_matrix) {
+	let traveled_nodes = new Set();
+
+	let edges = [];
+
+	let [u, v] = [undefined, index];
+	traveled_nodes.add(index);
+
+	let knot = undefined;
+	while(true) {
+		[u, v] = [v, nextnode_matrix[v][index]];
+		edges.push({ u, v });
+
+		if(traveled_nodes.has(v)) {
+			knot = v;
+			break;
+		}
+
+		traveled_nodes.add(v);
+	}
+
+	let startIndex = edges.findIndex((edge) => edge.u === knot);
+	edges.splice(0, startIndex);
+
+	return edges;
+}
+
 module.exports = {
 	floyd_warshall_alg_1,
 	floyd_warshall_alg_2,
 	floyd_warshall_alg_3,
 	reconstructPath,
+	reconstructSimpleCycle,
 	NegativeCycleDetectedException,
 };

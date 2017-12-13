@@ -1,4 +1,5 @@
 const assert = require('assert');
+const { createNDimArray } = require('../util/ndim_arr');
 
 describe('chap.04 greedy', function() {
 	describe('prim_alg', function() {
@@ -152,6 +153,42 @@ describe('chap.04 greedy', function() {
 			// console.log(JSON.stringify(result, null, '\t'));
 
 			assert.deepStrictEqual(result, expected_result);
+		});
+	});
+	describe('maximum_flow', function() {
+		let {
+			find_maximum_flow,
+			find_maxflow_with_mincost,
+		} = require('../greedy/maximum_flow');
+
+		let n = 5;	// node count
+
+		let edges = [
+			{ from: 0, to: 1, capacity: 10, cost: 2 },
+			{ from: 0, to: 2, capacity: 10, cost: 1 },
+			{ from: 0, to: 3, capacity: 10, cost: 10 },
+			{ from: 1, to: 3, capacity: 10, cost: 1 },
+			{ from: 2, to: 3, capacity: 10, cost: 1 },
+			{ from: 3, to: 4, capacity: 15, cost: 1 },
+		];
+
+		let flow_network_capacity = createNDimArray([n, n], 0);
+		let path_cost = createNDimArray([n, n], +Infinity);
+
+		let source = 0, sink = n-1;
+		for(let edge of edges) {
+			let { from, to, capacity, cost } = edge;
+			flow_network_capacity[from][to] = capacity;
+			path_cost[from][to] = cost;
+		}
+
+		it('should find_maximum_flow', function() {
+			let result = find_maximum_flow(flow_network_capacity, source, sink);
+			assert.strictEqual(result.value, 15);
+		});
+		it('should find_maxflow_with_mincost', function() {
+			let result = find_maxflow_with_mincost(flow_network_capacity, path_cost, source, sink);
+			assert.strictEqual(result.cost, 50);
 		});
 	});
 });
