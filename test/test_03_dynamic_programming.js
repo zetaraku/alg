@@ -127,6 +127,7 @@ describe('chap.03 dynamic_programming', function() {
 		let n = matrix_sizes.length - 1;
 
 		let expected_result = {
+			min_cost: 348,
 			cost_matrix: [
 				[0, 30, 64, 132, 226, 348],
 				[undefined, 0, 24, 72, 156, 268],
@@ -148,14 +149,13 @@ describe('chap.03 dynamic_programming', function() {
 
 		it('correct', function() {
 			let result = consecutive_matrix_multiplication(matrix_sizes);
+			let min_cost = result.cost_matrix[0][n-1];
 			let order = reconstructOrder(0, n-1, result.firsttail_matrix);
 
-			// console.log('min cost:', result.cost_matrix[0][n-1]);
-			// console.log('order:', JSON.stringify(order));
-
+			assert.strictEqual(min_cost, expected_result.min_cost);
+			assert.deepStrictEqual(order, expected_result.order);
 			assert.deepStrictEqual(result.cost_matrix, expected_result.cost_matrix);
 			assert.deepStrictEqual(result.firsttail_matrix, expected_result.firsttail_matrix);
-			assert.deepStrictEqual(order, expected_result.order);
 		});
 	});
 	describe('optimal_bst', function() {
@@ -208,7 +208,6 @@ describe('chap.03 dynamic_programming', function() {
 			let tree = reconstructTree(0, n, result.rootnode_matrix);
 
 			// console.log('min cost:', result.cost_matrix[0][n] / total_base);
-			// console.log('tree:', JSON.stringify(tree));
 
 			assert.deepStrictEqual(result.cost_matrix, expected_result.cost_matrix);
 			assert.deepStrictEqual(result.rootnode_matrix, expected_result.rootnode_matrix);
@@ -238,17 +237,11 @@ describe('chap.03 dynamic_programming', function() {
 		it('alg 1 correct', function() {
 			let result = traveling_salesman_1(adj_matrix);
 
-			// console.log('min distance:', result.min_distance);
-			// console.log('path:', result.shortest_path);
-
 			assert.strictEqual(result.min_distance, expected_result.min_distance);
 			assert.deepStrictEqual(result.shortest_path, expected_result.shortest_path);
 		});
 		it('alg 2 correct', function() {
 			let result = traveling_salesman_2(adj_matrix);
-
-			// console.log('min distance:', result.min_distance);
-			// console.log('path:', result.shortest_path);
 
 			assert.strictEqual(result.min_distance, expected_result.min_distance);
 			assert.deepStrictEqual(result.shortest_path, expected_result.shortest_path);
@@ -257,27 +250,26 @@ describe('chap.03 dynamic_programming', function() {
 	describe('sequence_alignment', function() {
 		let { sequence_alignment, reconstructPath } = require('../dynamic_programming/sequence_alignment');
 
-		let s1 = 'AACAGTTACC', s2 = 'TAAGGTCA';
+		let s1 = 'UUUATCGATCGUZZZ', s2 = 'UUUZATCKKTCGZZZ';
 		let m = s1.length, n = s2.length;
 
 		let expected_result = {
-			min_cost: 7,
+			min_cost: 6,
 		};
 
 		it('correct', function() {
 			let result = sequence_alignment(s1, s2, { unmatch_penalty: 1, gap_penalty: 2 });
 
 			let min_cost = result.cost_matrix[m][n];
-
-			// console.log('min cost:', min_cost);
+			assert.strictEqual(min_cost, expected_result.min_cost);
 
 			let alignment = reconstructPath(s1, s2, result.choose_matrix);
-
-			// console.log('alignment:');
-			// console.log('\t', alignment.s1);
-			// console.log('\t', alignment.s2);
-
-			assert.strictEqual(min_cost, expected_result.min_cost);
+			assert.deepStrictEqual(alignment.s1,
+				['U','U','U',null,'A','T','C','G','A','T','C','G','U','Z','Z','Z']
+			);
+			assert.deepStrictEqual(alignment.s2,
+				['U','U','U','Z','A','T','C','K','K','T','C','G',null,'Z','Z','Z']
+			);
 		});
 	});
 	describe('the_0_1_knapsack', function() {
@@ -296,16 +288,10 @@ describe('chap.03 dynamic_programming', function() {
 
 		it('alg 1 (bottom_up) correct', function() {
 			let result = the_0_1_knapsack_bottom_up(item_data, knapsack_capacity);
-
-			// console.log('max value:', result);
-
 			assert.strictEqual(result, expected_result);
 		});
 		it('alg 2 (bidirectional) correct', function() {
 			let result = the_0_1_knapsack_bidirectional(item_data, knapsack_capacity);
-
-			// console.log('max value:', result);
-
 			assert.strictEqual(result, expected_result);
 		});
 	});
