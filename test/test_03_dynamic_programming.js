@@ -16,45 +16,105 @@ describe('chap.03 dynamic_programming', function() {
 			floyd_warshall_alg_1,
 			floyd_warshall_alg_2,
 			floyd_warshall_alg_3,
+			reconstructPath,
+			NegativeCycleDetectedException,
 		} = require('../dynamic_programming/floyd_warshall_alg');
 
-		let adj_matrix = [
-			[0, 1, Infinity, 1, 5],
-			[9, 0, 3, 2, Infinity],
-			[Infinity, Infinity, 0, 4, Infinity],
-			[Infinity, Infinity, 2, 0, 3],
-			[3, Infinity, Infinity, Infinity, 0],
-		];
+		describe('without negative cycle', function() {
+			let adj_matrix = [
+				[0, 1, Infinity, 1, 5],
+				[9, 0, 3, 2, Infinity],
+				[Infinity, Infinity, 0, 4, Infinity],
+				[Infinity, Infinity, 2, 0, 3],
+				[3, Infinity, Infinity, Infinity, 0],
+			];
 
-		let expected_result = [
-			[0, 1, 3, 1, 4],
-			[8, 0, 3, 2, 5],
-			[10, 11, 0, 4, 7],
-			[6, 7, 2, 0, 3],
-			[3, 4, 6, 4, 0],
-		];
+			let expected_result = [
+				[0, 1, 3, 1, 4],
+				[8, 0, 3, 2, 5],
+				[10, 11, 0, 4, 7],
+				[6, 7, 2, 0, 3],
+				[3, 4, 6, 4, 0],
+			];
 
-		it('alg 1 correct', function() {
-			let result = floyd_warshall_alg_1(adj_matrix);
-			assert.deepStrictEqual(result, expected_result);
+			it('alg 1 correct', function() {
+				let result = floyd_warshall_alg_1(adj_matrix);
+				assert.deepStrictEqual(result, expected_result);
+			});
+			it('alg 2 correct', function() {
+				let result = floyd_warshall_alg_2(adj_matrix);
+				assert.deepStrictEqual(result, expected_result);
+			});
+			it('alg 3 correct', function() {
+				let result = floyd_warshall_alg_3(adj_matrix);
+
+				let expected_paths = [
+					[
+						[0],
+						[0, 1],
+						[0, 3, 2],
+						[0, 3],
+						[0, 3, 4],
+					],
+					[
+						[1, 3, 4, 0],
+						[1],
+						[1, 2],
+						[1, 3],
+						[1, 3, 4],
+					],
+					[
+						[2, 3, 4, 0],
+						[2, 3, 4, 0, 1],
+						[2],
+						[2, 3],
+						[2, 3, 4],
+					],
+					[
+						[3, 4, 0],
+						[3, 4, 0, 1],
+						[3, 2],
+						[3],
+						[3, 4],
+					],
+					[
+						[4, 0],
+						[4, 0, 1],
+						[4, 0, 3, 2],
+						[4, 0, 3],
+						[4],
+					],
+				];
+
+				let n = adj_matrix.length;
+				let result_paths = [...Array(n)].map((_, i) =>
+					[...Array(n)].map((_, j) =>
+						reconstructPath(i, j, result.nextnode_matrix)
+					)
+				);
+
+				assert.deepStrictEqual(result.distance_matrix, expected_result);
+				assert.deepStrictEqual(result_paths, expected_paths);
+			});
 		});
-		it('alg 2 correct', function() {
-			let result = floyd_warshall_alg_2(adj_matrix);
-			assert.deepStrictEqual(result, expected_result);
-		});
-		it('alg 3 correct', function() {
-			let result = floyd_warshall_alg_3(adj_matrix);
+		describe('with negative cycle', function() {
+			let adj_matrix = [
+				[ Infinity, 2, 1, Infinity, Infinity ],
+				[ -2, Infinity, Infinity, 1, Infinity ],
+				[ Infinity, Infinity, Infinity, 1, Infinity ],
+				[ -10, -1, Infinity, Infinity, Infinity ],
+				[ Infinity, Infinity, Infinity, -1, Infinity ],
+			];
 
-			// let n = adj_matrix.length;
-			// for(let i = 0; i < n; i++)
-			// 	for(let j = 0; j < n; j++)
-			// 		console.log(
-			// 			`[${i}, ${j}] ` +
-			// 			reconstructPath(i, j, result.nextnode_matrix).join(' -> ') +
-			// 			` (${result.distance_matrix[i][j]})`
-			// 		);
-
-			assert.deepStrictEqual(result.distance_matrix, expected_result);
+			it('alg 1 detected negative cycle', function() {
+				assert.throws(() => floyd_warshall_alg_1(adj_matrix), NegativeCycleDetectedException);
+			});
+			it('alg 2 detected negative cycle', function() {
+				assert.throws(() => floyd_warshall_alg_2(adj_matrix), NegativeCycleDetectedException);
+			});
+			it('alg 3 detected negative cycle', function() {
+				assert.throws(() => floyd_warshall_alg_3(adj_matrix), NegativeCycleDetectedException);
+			});
 		});
 	});
 	describe('consecutive_matrix_multiplication', function() {

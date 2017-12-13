@@ -1,5 +1,13 @@
 const { createNDimArray, copyNDimArray } = require('../util/ndim_arr');
 
+class NegativeCycleDetectedException {
+	constructor(data) {
+		this.message = 'Negative cycle(s) detected.';
+		this.name = 'NegativeCycleDetectedException';
+		this.data = data;
+	}
+}
+
 // Floyd-Warshall algorithm (original version)
 // Time complexity: O(n^3), where n = number of nodes
 // Space complexity: O(n^3)
@@ -29,9 +37,8 @@ function floyd_warshall_alg_1(adj_matrix) {
 		and reduce the cost to itself to a negative number.
 	*/
 	for(let i = 0; i < n; i++)
-		for(let j = 0; j < n; j++)
-			if(dp_distance[n][i][j] < 0)
-				throw 'Negative cycle(s) detected.';
+		if(dp_distance[n][i][i] < 0)
+			throw new NegativeCycleDetectedException(dp_distance[n]);
 
 	return dp_distance[n];
 }
@@ -73,9 +80,8 @@ function floyd_warshall_alg_2(adj_matrix) {
 				);
 
 	for(let i = 0; i < n; i++)
-		for(let j = 0; j < n; j++)
-			if(dp_distance[i][j] < 0)
-				throw 'Negative cycle(s) detected.';
+		if(dp_distance[i][i] < 0)
+			throw new NegativeCycleDetectedException(dp_distance);
 
 	return dp_distance;
 }
@@ -113,9 +119,10 @@ function floyd_warshall_alg_3(adj_matrix) {
 	}
 
 	for(let i = 0; i < n; i++)
-		for(let j = 0; j < n; j++)
-			if(dp_distance[i][j] < 0)
-				throw 'Negative cycle(s) detected.';
+		if(dp_distance[i][i] < 0)
+			throw new NegativeCycleDetectedException(
+				{ distance_matrix: dp_distance, nextnode_matrix: dp_nextnode }
+			);
 
 	return { distance_matrix: dp_distance, nextnode_matrix: dp_nextnode };
 }
@@ -133,4 +140,5 @@ module.exports = {
 	floyd_warshall_alg_2,
 	floyd_warshall_alg_3,
 	reconstructPath,
+	NegativeCycleDetectedException,
 };
