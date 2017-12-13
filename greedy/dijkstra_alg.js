@@ -1,11 +1,15 @@
+const assert = require('assert');
+
 // Dijkstra's algorithm (similar to prim_alg.js)
 // Time complexity: O(n^2), where n = number of nodes
 // * There exists another implementation for better time complexity by using heap
 function dijkstra_alg(adj_matrix, start_node) {
 	let n = adj_matrix.length;
 
-	if(!(Number.isInteger(start_node) && 0 <= start_node && start_node < n))
-		throw new Error('Invalid start node.');
+	assert(
+		Number.isInteger(start_node) && (0 <= start_node && start_node < n),
+		'Invalid start node.'
+	);
 
 	let current_tree = {
 		nodes: new Set(),

@@ -82,7 +82,10 @@ function find_maxflow_with_mincost(flow_network_capacity, flow_network_cost, sou
 
 	for(let i = 0; i < n; i++) {
 		for(let j = 0; j < n; j++) {
-			assert(flow_network_cost[i][j] >= 0);
+			assert(
+				flow_network_cost[i][j] >= 0,
+				'the flow network cannot have a negative cost!'
+			);
 			if(current_flow[i][j] > 0)
 				current_flow_cost += current_flow[i][j] * flow_network_cost[i][j];
 			if(flow_network_cost[i][j] !== +Infinity) {

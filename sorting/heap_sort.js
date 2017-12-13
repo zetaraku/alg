@@ -1,3 +1,5 @@
+const assert = require('assert');
+
 const defaultCompareFunction = (a, b) => (a < b ? -1 : a > b ? +1 : 0);
 
 // unstable
@@ -19,7 +21,7 @@ function heap_sort(data, compare = defaultCompareFunction) {
 	}
 
 	function extractMax() {
-		// assert heap_size > 0
+		assert(heap_size > 0);
 		let result = data[0];
 		data[0] = data[--heap_size];
 		siftDown(0);

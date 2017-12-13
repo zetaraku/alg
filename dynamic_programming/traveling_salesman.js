@@ -1,3 +1,5 @@
+const assert = require('assert');
+
 // The generic algorithm to solve the traveling salesman problem
 // Time complexity: O(n^2 2^n), where n = number of nodes
 // Space complexity: O(n 2^n)
@@ -68,8 +70,10 @@ function traveling_salesman_1(adj_matrix) {
 		but the results of bitwise operators are signed 32-bit integers (-2^31 ~ 2^31-1).
 		And because (1 << 31) == -2147483648, to avoid integer overflow, we demand n <= 30
 	*/
-	if(n > 30)
-		throw new Error('Max node number exceeded. (max: 30)');
+	assert(
+		(n <= 30),
+		'Max node number exceeded. (max: 30)'
+	);
 
 	const EMPTY_SET = 0;
 	const ALL_NODES = (1 << n) - 1;

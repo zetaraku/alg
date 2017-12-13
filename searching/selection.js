@@ -1,12 +1,15 @@
 const { insertion_sort } = require('../sorting/insertion_sort');
+const assert = require('assert');
 
 const defaultCompareFunction = (a, b) => (a < b ? -1 : a > b ? +1 : 0);
 
 function selection(data, kth, compare = defaultCompareFunction) {
 	let n = data.length;
 
-	if(kth < 0 || kth >= n)
-		throw new Error('out of range!');
+	assert(
+		(kth >= 0 && kth < n),
+		'out of range!'
+	);
 
 	data = data.slice();	// prevent mutation of original data
 	return sub_selection(0, n-1);
