@@ -26,10 +26,15 @@ describe('chap.04 greedy', function() {
 
 		it('correct', function() {
 			let result = prim_alg(adj_matrix);
-
-			// console.log(result);
-
 			assert.deepStrictEqual(result, expected_result);
+		});
+		it('correct when empty', function() {
+			let result = prim_alg([]);
+			assert.deepStrictEqual(result, {
+				nodes: new Set(),
+				edges: new Set(),
+				cost: 0
+			});
 		});
 	});
 	describe('kruskal_alg', function() {
@@ -56,10 +61,15 @@ describe('chap.04 greedy', function() {
 
 		it('correct', function() {
 			let result = kruskal_alg(adj_matrix);
-
-			// console.log(result);
-
 			assert.deepStrictEqual(result, expected_result);
+		});
+		it('correct when empty', function() {
+			let result = kruskal_alg([]);
+			assert.deepStrictEqual(result, {
+				nodes: new Set(),
+				edges: new Set(),
+				cost: 0
+			});
 		});
 	});
 	describe('dijkstra_alg', function() {
@@ -89,9 +99,6 @@ describe('chap.04 greedy', function() {
 
 		it('correct', function() {
 			let result = dijkstra_alg(adj_matrix, 0);
-
-			// console.log(result);
-
 			assert.deepStrictEqual(result, expected_result);
 		});
 	});
