@@ -22,4 +22,109 @@ describe('chap.08 searching', function() {
 			assert.strictEqual(result, sorted_data[Math.floor((n-1)/2)]);
 		});
 	});
+	describe('b_tree', function() {
+		let { BTree, BTreeNode } = require('../searching/b_tree');
+		BTree.factor = 3;
+
+		describe('BTree', function() {
+			let keyList = ['F', 'S', 'Q', 'K', 'C', 'L', 'H', 'T', 'V', 'W', 'M', 'R', 'N', 'P', 'A', 'B', 'X', 'Y', 'D', 'Z', 'E'];
+			let notKeyList = ['G', 'I', 'J', 'O', 'U'];
+
+			let btree = new BTree();
+
+			it('new', function() {
+				let expectedInitialized = {
+					keys: [],
+					children: null
+				};
+				assert.strictEqual(
+					JSON.stringify(btree.root),
+					JSON.stringify(expectedInitialized)
+				);
+			});
+			it('insert', function() {
+				let expectedInserted = {
+					keys: ['N'],
+					children: [
+						{
+							keys: ['C', 'K'],
+							children: [
+								{
+									keys: ['A', 'B'],
+									children: null
+								},
+								{
+									keys: ['D', 'E', 'F', 'H'],
+									children: null
+								},
+								{
+									keys: ['L', 'M'],
+									children: null
+								}
+							]
+						},
+						{
+							keys: ['S', 'W'],
+							children: [
+								{
+									keys: ['P', 'Q', 'R'],
+									children: null
+								},
+								{
+									keys: ['T', 'V'],
+									children: null
+								},
+								{
+									keys: ['X', 'Y', 'Z'],
+									children: null
+								}
+							]
+						}
+					]
+				};
+				for(let key of keyList) {
+					btree.insert(key);
+				}
+				assert.strictEqual(
+					JSON.stringify(btree.root),
+					JSON.stringify(expectedInserted)
+				);
+			});
+			it('search', function() {
+				for(let key of notKeyList) {
+					assert(btree.search(key) === null);
+				}
+				for(let key of keyList) {
+					assert(btree.search(key) !== null);
+				}
+			});
+			it('delete', function() {
+				let expectedDeleted = {
+					keys: [],
+					children: null
+				};
+				for(let key of notKeyList) {
+					assert(btree.delete(key) === false);
+				}
+				for(let key of keyList) {
+					assert(btree.delete(key) === true);
+				}
+				for(let key of notKeyList) {
+					assert(btree.delete(key) === false);
+				}
+				assert.strictEqual(
+					JSON.stringify(btree.root),
+					JSON.stringify(expectedDeleted)
+				);
+			});
+		});
+
+		describe('BTreeNode', function() {
+			// insert preparation
+
+			it.skip('correct', function() {
+				// insert test check
+			});
+		});
+	});
 });
