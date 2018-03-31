@@ -23,13 +23,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ztrk1600/alg.git"
+    "url": "git+https://github.com/zetaraku/alg.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ztrk1600/alg/issues"
+    "url": "https://github.com/zetaraku/alg/issues"
   },
-  "homepage": "https://github.com/ztrk1600/alg#readme",
+  "homepage": "https://github.com/zetaraku/alg#readme",
   "private": true
 }
