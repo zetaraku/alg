@@ -33,17 +33,14 @@ describe('chap.08 searching', function() {
 			let btree = new BTree();
 
 			it('new', function() {
-				let expectedInitialized = {
+				let expectedInitialized = BTree.from({
 					keys: [],
 					children: null
-				};
-				assert.strictEqual(
-					JSON.stringify(btree.root),
-					JSON.stringify(expectedInitialized)
-				);
+				});
+				assert.deepStrictEqual(btree,expectedInitialized);
 			});
 			it('insert', function() {
-				let expectedInserted = {
+				let expectedInserted = BTree.from({
 					keys: ['N'],
 					children: [
 						{
@@ -81,14 +78,11 @@ describe('chap.08 searching', function() {
 							]
 						}
 					]
-				};
+				});
 				for(let key of keyList) {
 					btree.insert(key);
 				}
-				assert.strictEqual(
-					JSON.stringify(btree.root),
-					JSON.stringify(expectedInserted)
-				);
+				assert.deepStrictEqual(btree, expectedInserted);
 			});
 			it('search', function() {
 				for(let key of notKeyList) {
@@ -99,10 +93,10 @@ describe('chap.08 searching', function() {
 				}
 			});
 			it('delete', function() {
-				let expectedDeleted = {
+				let expectedDeleted = BTree.from({
 					keys: [],
 					children: null
-				};
+				});
 				for(let key of notKeyList) {
 					assert(btree.delete(key) === false);
 				}
@@ -112,10 +106,7 @@ describe('chap.08 searching', function() {
 				for(let key of notKeyList) {
 					assert(btree.delete(key) === false);
 				}
-				assert.strictEqual(
-					JSON.stringify(btree.root),
-					JSON.stringify(expectedDeleted)
-				);
+				assert.deepStrictEqual(btree, expectedDeleted);
 			});
 		});
 

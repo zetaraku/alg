@@ -8,6 +8,11 @@ class BTree {
 	constructor() {
 		this.root = new BTreeNode();
 	}
+	static from(data) {
+		let tree = new BTree();
+		tree.root = BTreeNode.from(data);
+		return tree;	// the result may not be a legal BTree
+	}
 	search(key) {
 		assert(key !== undefined);
 		return this.root.search(key);
@@ -40,6 +45,13 @@ class BTreeNode {
 	constructor() {
 		this.keys = [];
 		this.children = null;
+	}
+	static from(data) {
+		let node = new BTreeNode();
+		node.keys = data.keys;
+		if(data.children !== null)
+			node.children = data.children.map((child) => BTreeNode.from(child));
+		return node;
 	}
 	search(key) {
 		assert(key !== undefined);
