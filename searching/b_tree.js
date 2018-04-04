@@ -25,7 +25,7 @@ class BTree {
 			this.root = newRoot;
 			this.root.split_child(0);
 		}
-		this.root.insert_notfull(key);
+		return this.root.insert_notfull(key);
 	}
 	delete(key) {
 		assert(key !== undefined);
@@ -66,18 +66,26 @@ class BTreeNode {
 	insert_notfull(key) {
 		assert(key !== undefined);
 		assert(!this.isFull());
-		let [_, foundChildIndex, insertIndex] = this.shallow_search_backward(key);
+		let [foundKeyIndex, _, insertIndex] = this.shallow_search(key);
 
-		if(this.isLeaf()) {
-			this.keys.splice(insertIndex, 0, key);
-			return true;
+		if(foundKeyIndex !== null) {
+			return false;
 		} else {
-			if(this.children[foundChildIndex].isFull()) {
-				let inserted_median_key = this.split_child(foundChildIndex);
-				if(key > inserted_median_key)
-					foundChildIndex++;
+			if(this.isLeaf()) {
+				this.keys.splice(insertIndex, 0, key);
+				return true;
+			} else {
+				if(this.children[insertIndex].isFull()) {
+					let inserted_median_key = this.split_child(insertIndex);
+
+					if(inserted_median_key == key)
+						return false;	// beware of the moved key!
+
+					if(key > inserted_median_key)
+						insertIndex++;
+				}
+				return this.children[insertIndex].insert_notfull(key);
 			}
-			return this.children[foundChildIndex].insert_notfull(key);
 		}
 	}
 	delete_notlack(key, isRoot) {
@@ -143,27 +151,6 @@ class BTreeNode {
 				return [null, i, i];				// (2a) give a possible child to search
 			else
 				return [null, null, i];				// (2b) only give a proper index to insert
-		}
-	}
-	shallow_search_backward(key) {
-		assert(key !== undefined);
-		for(let i = this.keys.length; true; i--) {
-			let k = this.keys[i-1];
-			if(i > 0) {
-				if(key < k)
-					continue;
-				else if(key == k)
-					return [i-1, i, i];
-				else	// key > k
-					/* pass through */;
-			} else {	// i == 0
-				/* pass through */;
-			}
-
-			if(!this.isLeaf())
-				return [null, i, i];
-			else
-				return [null, null, i];
 		}
 	}
 	split_child(i) {

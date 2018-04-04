@@ -80,7 +80,10 @@ describe('chap.08 searching', function() {
 					]
 				});
 				for(let key of keyList) {
-					btree.insert(key);
+					assert(btree.insert(key) === true);
+				}
+				for(let key of keyList) {
+					assert(btree.insert(key) === false);
 				}
 				assert.deepStrictEqual(btree, expectedInserted);
 			});
