@@ -13,9 +13,6 @@ describe('chap.06 branch_and_bound', function() {
 			let expected_result = 90;
 
 			let result = the_0_1_knapsack(item_data, knapsack_capacity);
-
-			// console.log('max value:', result);
-
 			assert.strictEqual(result, expected_result);
 		});
 		it('testcase 2', function() {
@@ -27,9 +24,6 @@ describe('chap.06 branch_and_bound', function() {
 			let expected_result = 200;
 
 			let result = the_0_1_knapsack(item_data, knapsack_capacity);
-
-			// console.log('max value:', result);
-
 			assert.strictEqual(result, expected_result);
 		});
 	});
@@ -51,10 +45,6 @@ describe('chap.06 branch_and_bound', function() {
 			};
 
 			let result = traveling_salesman(adj_matrix);
-
-			// console.log('min distance:', result.min_distance);
-			// console.log('path:', result.shortest_path);
-
 			assert.strictEqual(result.min_distance, expected_result.min_distance);
 			assert.deepStrictEqual(result.shortest_path, expected_result.shortest_path);
 		});
@@ -75,10 +65,6 @@ describe('chap.06 branch_and_bound', function() {
 			};
 
 			let result = traveling_salesman(adj_matrix);
-
-			// console.log('min distance:', result.min_distance);
-			// console.log('path:', result.shortest_path);
-
 			assert.strictEqual(result.min_distance, expected_result.min_distance);
 			assert.deepStrictEqual(result.shortest_path, expected_result.shortest_path);
 		});

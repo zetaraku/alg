@@ -34,11 +34,8 @@ class BTree {
 			this.root = this.root.children[0];
 		return delete_result;
 	}
-	toString() {
-		return this.root.toString();
-	}
 } {
-	BTree.factor = 3;
+	BTree.factor = 3;	// key.length = f-1 ~ 2f-1
 }
 
 class BTreeNode {
@@ -228,9 +225,6 @@ class BTreeNode {
 	}
 	isLack() {
 		return this.keys.length <= BTree.factor - 1;
-	}
-	toString() {
-		return JSON.stringify(this, null, '\t');
 	}
 }
 

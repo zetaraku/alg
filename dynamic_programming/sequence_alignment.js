@@ -5,7 +5,7 @@ const FROM_UPLEFT = 0, FROM_UP = 1, FROM_LEFT = 2;
 // algorithm to solve the sequence alignment problem
 // Time complexity: O(mn), where m = length of string 1, W = length of string 2
 // Space complexity: O(mn)
-function sequence_alignment(s1, s2, { unmatch_penalty = 1, gap_penalty = 2 } = {}) {
+function sequence_alignment(s1, s2, { unmatch_penalty /* = 1 */, gap_penalty /* = 2 */ }) {
 	let m = s1.length, n = s2.length;
 
 	/*
@@ -78,6 +78,8 @@ function reconstructPath(s1, s2, choose_matrix) {
 		} else if(choose_matrix[i][j] === 2) {
 			a1.unshift(null);
 			a2.unshift(s2[(-1)+j--]);
+		} else {
+			// this should never happen
 		}
 	}
 

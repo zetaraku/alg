@@ -117,14 +117,14 @@ function traveling_salesman(adj_matrix) {
 		return node;
 	}
 
-	function traverseTree(node) {
-		console.log(
-			'\t'.repeat(node.level) + node.added_vertex,
-			'lb:'+node.lower_bound,
-		);
-		for(let child_node of node.children)
-			traverseTree(child_node);
-	}
+	// function traverseTree(node) {
+	// 	console.log(
+	// 		'\t'.repeat(node.level) + node.added_vertex,
+	// 		'lb:'+node.lower_bound,
+	// 	);
+	// 	for(let child_node of node.children)
+	// 		traverseTree(child_node);
+	// }
 }
 
 module.exports = { traveling_salesman };

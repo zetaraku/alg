@@ -50,10 +50,13 @@ describe('chap.05 backtracking', function() {
 			assert.deepStrictEqual(results.length, expected_results.length);
 		});
 		it('testcase 2', function() {
-			let item_weights = [2, 4, 5];
-			let total_capacity = 6;
+			let item_weights = [1, 3, 3, 3, 6];
+			let total_capacity = 9;
 			let expected_results = [
-				new Set([0, 1]),
+				new Set([1, 2, 3]),
+				new Set([1, 4]),
+				new Set([2, 4]),
+				new Set([3, 4]),
 			];
 
 			let results = sum_of_subsets(item_weights, total_capacity);
@@ -61,10 +64,20 @@ describe('chap.05 backtracking', function() {
 			assert.deepStrictEqual(results.length, expected_results.length);
 		});
 		it('testcase 3', function() {
-			let item_weights = [3, 4, 5, 6];
-			let total_capacity = 13;
+			let item_weights = [2, 4, 6];
+			let total_capacity = 5;
 			let expected_results = [
-				new Set([0, 1, 3]),
+			];
+
+			let results = sum_of_subsets(item_weights, total_capacity);
+
+			assert.deepStrictEqual(results.length, expected_results.length);
+		});
+		it('testcase 4', function() {
+			let item_weights = [1, 2, 3];
+			let total_capacity = 0;
+			let expected_results = [
+				new Set([]),
 			];
 
 			let results = sum_of_subsets(item_weights, total_capacity);

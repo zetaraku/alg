@@ -7,9 +7,7 @@ const assert = require('assert');
 
 describe('chap.00 template', function() {
 	describe('<alg_name>', function() {
-		it('correct', () => {}); return;
-
-		let { /* required functions */ } = require('../<catalog>/<alg_name>');
+		// let { /* required functions */ } = require('../<catalog>/<alg_name>');
 
 		// insert preparation
 

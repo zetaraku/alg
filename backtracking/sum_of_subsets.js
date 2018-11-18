@@ -49,8 +49,8 @@ function sum_of_subsets(item_weights, total_capacity) {
 	}
 
 	function isPromising(i, choosed) {
-		if(i >= n)
-			return false;
+		// if(i >= n)
+		// 	return false;
 
 		let new_weight = accumulated_weight + (choosed ? sorted_items[i].weight : 0);
 		return (

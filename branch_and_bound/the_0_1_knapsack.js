@@ -119,15 +119,15 @@ function the_0_1_knapsack({ item_values, item_weights }, total_capacity) {
 		return node.upper_bound > current_best_value;
 	}
 
-	function traverseTree(node) {
-		if(node.level >= 0)
-			console.log(
-				'\t'.repeat(node.level) + (node.choosed ? '+' : '-'),
-				'w:'+node.weight, 'v:'+node.value, 'uv:'+node.upper_bound,
-			);
-		for(let child_node of node.children)
-			traverseTree(child_node);
-	}
+	// function traverseTree(node) {
+	// 	if(node.level >= 0)
+	// 		console.log(
+	// 			'\t'.repeat(node.level) + (node.choosed ? '+' : '-'),
+	// 			'w:'+node.weight, 'v:'+node.value, 'uv:'+node.upper_bound,
+	// 		);
+	// 	for(let child_node of node.children)
+	// 		traverseTree(child_node);
+	// }
 }
 
 module.exports = { the_0_1_knapsack };
