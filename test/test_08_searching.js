@@ -37,7 +37,7 @@ describe('chap.08 searching', function() {
 					keys: [],
 					children: null
 				});
-				assert.deepStrictEqual(btree,expectedInitialized);
+				assert.deepStrictEqual(btree, expectedInitialized);
 			});
 			it('insert', function() {
 				let expectedInserted = BTree.from({
@@ -106,7 +106,7 @@ describe('chap.08 searching', function() {
 				for(let key of keyList) {
 					assert(btree.delete(key) === true);
 				}
-				for(let key of notKeyList) {
+				for(let key of keyList) {
 					assert(btree.delete(key) === false);
 				}
 				assert.deepStrictEqual(btree, expectedDeleted);

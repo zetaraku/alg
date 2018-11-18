@@ -1,4 +1,6 @@
 const assert = require('assert');
+const I = Infinity;
+const U = undefined;
 
 describe('chap.03 dynamic_programming', function() {
 	describe('binomial_coefficient', function() {
@@ -22,11 +24,11 @@ describe('chap.03 dynamic_programming', function() {
 
 		describe('without negative cycle', function() {
 			let adj_matrix = [
-				[0, 1, Infinity, 1, 5],
-				[9, 0, 3, 2, Infinity],
-				[Infinity, Infinity, 0, 4, Infinity],
-				[Infinity, Infinity, 2, 0, 3],
-				[3, Infinity, Infinity, Infinity, 0],
+				[0, 1, I, 1, 5],
+				[9, 0, 3, 2, I],
+				[I, I, 0, 4, I],
+				[I, I, 2, 0, 3],
+				[3, I, I, I, 0],
 			];
 
 			let expected_result = [
@@ -99,11 +101,11 @@ describe('chap.03 dynamic_programming', function() {
 		});
 		describe('with negative cycle', function() {
 			let adj_matrix = [
-				[ Infinity, 2, 1, Infinity, Infinity ],
-				[ -2, Infinity, Infinity, 1, Infinity ],
-				[ Infinity, Infinity, Infinity, 1, Infinity ],
-				[ -10, -1, Infinity, Infinity, Infinity ],
-				[ Infinity, Infinity, Infinity, -1, Infinity ],
+				[ I, 2, 1, I, I ],
+				[ -2, I, I, 1, I ],
+				[ I, I, I, 1, I ],
+				[ -10, -1, I, I, I ],
+				[ I, I, I, -1, I ],
 			];
 
 			it('alg 1 detected negative cycle', function() {
@@ -130,19 +132,19 @@ describe('chap.03 dynamic_programming', function() {
 			min_cost: 348,
 			cost_matrix: [
 				[0, 30, 64, 132, 226, 348],
-				[undefined, 0, 24, 72, 156, 268],
-				[undefined, undefined, 0, 72, 198, 366],
-				[undefined, undefined, undefined, 0, 168, 392],
-				[undefined, undefined, undefined, undefined, 0, 336],
-				[undefined, undefined, undefined, undefined, undefined, 0],
+				[U, 0, 24, 72, 156, 268],
+				[U, U, 0, 72, 198, 366],
+				[U, U, U, 0, 168, 392],
+				[U, U, U, U, 0, 336],
+				[U, U, U, U, U, 0],
 			],
 			firsttail_matrix: [
-				[undefined, 0, 0, 0, 0, 0],
-				[undefined, undefined, 1, 2, 3, 4],
-				[undefined, undefined, undefined, 2, 3, 4],
-				[undefined, undefined, undefined, undefined, 3, 4],
-				[undefined, undefined, undefined, undefined, undefined, 4],
-				[undefined, undefined, undefined, undefined, undefined, undefined],
+				[U, 0, 0, 0, 0, 0],
+				[U, U, 1, 2, 3, 4],
+				[U, U, U, 2, 3, 4],
+				[U, U, U, U, 3, 4],
+				[U, U, U, U, U, 4],
+				[U, U, U, U, U, U],
 			],
 			order: [0, [[[[1, 2], 3], 4], 5]],
 		};
@@ -172,17 +174,17 @@ describe('chap.03 dynamic_programming', function() {
 		let expected_result = {
 			cost_matrix: [
 				[0, 3, 9, 11, 14],
-				[undefined, 0, 3, 5, 8],
-				[undefined, undefined, 0, 1, 3],
-				[undefined, undefined, undefined, 0, 1],
-				[undefined, undefined, undefined, undefined, 0],
+				[U, 0, 3, 5, 8],
+				[U, U, 0, 1, 3],
+				[U, U, U, 0, 1],
+				[U, U, U, U, 0],
 			],
 			rootnode_matrix: [
-				[undefined, 0, 0, 1, 1],
-				[undefined, undefined, 1, 1, 1],
-				[undefined, undefined, undefined, 2, 2],
-				[undefined, undefined, undefined, undefined, 3],
-				[undefined, undefined, undefined, undefined, undefined],
+				[U, 0, 0, 1, 1],
+				[U, U, 1, 1, 1],
+				[U, U, U, 2, 2],
+				[U, U, U, U, 3],
+				[U, U, U, U, U],
 			],
 			tree: {
 				key: 1,
@@ -221,10 +223,10 @@ describe('chap.03 dynamic_programming', function() {
 		} = require('../dynamic_programming/traveling_salesman');
 
 		let adj_matrix = [
-			[0, 2, 9, Infinity],
+			[0, 2, 9, I],
 			[1, 0, 6, 4],
-			[Infinity, 7, 0, 8],
-			[6, 3, Infinity, 0],
+			[I, 7, 0, 8],
+			[6, 3, I, 0],
 		];
 
 		let n = adj_matrix.length;
@@ -255,6 +257,10 @@ describe('chap.03 dynamic_programming', function() {
 
 		let expected_result = {
 			min_cost: 6,
+			alignment: {
+				s1: ['U','U','U',null,'A','T','C','G','A','T','C','G','U','Z','Z','Z'],
+				s2: ['U','U','U','Z','A','T','C','K','K','T','C','G',null,'Z','Z','Z'],
+			},
 		};
 
 		it('correct', function() {
@@ -264,12 +270,8 @@ describe('chap.03 dynamic_programming', function() {
 			assert.strictEqual(min_cost, expected_result.min_cost);
 
 			let alignment = reconstructPath(s1, s2, result.choose_matrix);
-			assert.deepStrictEqual(alignment.s1,
-				['U','U','U',null,'A','T','C','G','A','T','C','G','U','Z','Z','Z']
-			);
-			assert.deepStrictEqual(alignment.s2,
-				['U','U','U','Z','A','T','C','K','K','T','C','G',null,'Z','Z','Z']
-			);
+			assert.deepStrictEqual(alignment.s1, expected_result.alignment.s1);
+			assert.deepStrictEqual(alignment.s2, expected_result.alignment.s2);
 		});
 	});
 	describe('the_0_1_knapsack', function() {

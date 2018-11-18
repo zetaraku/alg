@@ -3,10 +3,12 @@ const assert = require('assert');
 class SortTester {
 	constructor(testsets, { compareFunction = (a, b) => (a - b) } = {}) {
 		this.datasets = testsets.map((t) => {
-			let data = [...Array(t.n)].map((_, i) => t.dataGenerator(i));
+			let data = [...Array(t.n)].map((_, i) => ({ key: t.dataGenerator(i), order: i }));
 			return {
 				data: data,
-				expected_result: data.slice().sort(compareFunction)
+				expected_result: data.slice().sort(
+					(a, b) => compareFunction(a.key, b.key) || (a.order - b.order)
+				),
 			};
 		});
 		this.compareFunction = compareFunction;
@@ -15,53 +17,40 @@ class SortTester {
 	test(sortFunctionToBeTested) {
 		for(let dataset of this.datasets) {
 			let result = dataset.data.slice();
-			sortFunctionToBeTested(result, this.compareFunction);
-			assert.deepStrictEqual(result, dataset.expected_result);
+			sortFunctionToBeTested(result, (a, b) => this.compareFunction(a.key, b.key));
+			this.assertArraysEqual(result, dataset.expected_result);
 		}
 	}
 
-	test_no_compare(sortFunctionToBeTested) {
-		for(let dataset of this.datasets) {
-			let result = dataset.data.slice();
-			sortFunctionToBeTested(result, (e) => e);
-			assert.deepStrictEqual(result, dataset.expected_result);
-		}
-	}
-}
-
-class StableSortTester {
-	constructor(testsets, { compareFunction = (a, b) => (a - b) } = {}) {
-		let keyAndOrderCompareFunction = (a, b) => compareFunction(a.key, b.key) || a.order - b.order;
-		this.datasets = testsets.map((t) => {
-			let data = [...Array(t.n)].map((_, i) => ({ key: t.dataGenerator(i), order: i }));
-			return {
-				data: data,
-				expected_result: data.slice().sort(keyAndOrderCompareFunction)
-			};
-		});
-		this.keyCompareFunction = (a, b) => compareFunction(a.key, b.key);
-	}
-
-	test(sortFunctionToBeTested) {
-		for(let dataset of this.datasets) {
-			let result = dataset.data.slice();
-			sortFunctionToBeTested(result, this.keyCompareFunction);
-			assert.deepStrictEqual(result, dataset.expected_result);
-		}
-	}
-
-	test_no_compare(sortFunctionToBeTested) {
+	test_noncompare(sortFunctionToBeTested) {
 		for(let dataset of this.datasets) {
 			let result = dataset.data.slice();
 			sortFunctionToBeTested(result, (e) => e.key);
-			assert.deepStrictEqual(result, dataset.expected_result);
+			this.assertArraysEqual(result, dataset.expected_result);
 		}
+	}
+
+	assertArraysEqual(arr1, arr2) {
+		assert.strictEqual(arr1.length, arr2.length);
+		for(let i = 0; i < arr1.length; i++)
+			this.assertElementsEqual(arr1[i], arr2[i]);
+	}
+
+	assertElementsEqual(e1, e2) {
+		assert.strictEqual(e1.key, e2.key);
+	}
+}
+
+class StableSortTester extends SortTester {
+	assertElementsEqual(e1, e2) {
+		// assert.strictEqual(e1.key, e2.key);
+		assert.strictEqual(e1.order, e2.order);
 	}
 }
 
 describe('chap.07 sorting', function() {
 	let testsets = [
-		{ n: 0, dataGenerator: (i) => null },
+		{ n: 0, dataGenerator: null },
 		{ n: 1, dataGenerator: (i) => 0 },
 		{ n: 2, dataGenerator: (i) => i },
 		{ n: 1000, dataGenerator: (i) => 500 },
@@ -142,10 +131,10 @@ describe('chap.07 sorting', function() {
 		} = require('../sorting/radix_sort');
 
 		it('should do binary_radix_sort_lsd (stable)', function() {
-			stable_sort_tester.test_no_compare(binary_radix_sort_lsd);
+			stable_sort_tester.test_noncompare(binary_radix_sort_lsd);
 		});
 		it('should do binary_radix_sort_msd (stable)', function() {
-			stable_sort_tester.test_no_compare(binary_radix_sort_msd);
+			stable_sort_tester.test_noncompare(binary_radix_sort_msd);
 		});
 	});
 });
