@@ -297,4 +297,79 @@ describe('chap.03 dynamic_programming', function() {
 			assert.strictEqual(result, expected_result);
 		});
 	});
+	describe('coin_change', function() {
+		let {
+			coin_change_combinations,
+			coin_change_combinations_recursive,
+			coin_change_minimal_coins,
+			coin_change_minimal_coins_recursive,
+		} = require('../dynamic_programming/coin_change');
+
+		let coin_values = [2, 3, 5, 7];
+		let target_value = 21;
+
+		let expected_result = {
+			combinations_matrix: [
+				[ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+				[ 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 ],
+				[ 1, 0, 1, 1, 1, 1, 2, 1, 2, 2, 2, 2, 3, 2, 3, 3, 3, 3, 4, 3, 4, 4 ],
+				[ 1, 0, 1, 1, 1, 2, 2, 2, 3, 3, 4, 4, 5, 5, 6, 7, 7, 8, 9, 9, 11, 11 ],
+				[ 1, 0, 1, 1, 1, 2, 2, 3, 3, 4, 5, 5, 7, 7, 9, 10, 11, 13, 14, 16, 18, 20 ],
+			],
+			combinations_count: 20,
+			minimal_coins_matrix: [
+				[ 0, I, I, I, I, I, I, I, I, I, I, I, I, I, I, I, I, I, I, I, I, I ],
+				[ 0, I, 1, I, 2, I, 3, I, 4, I, 5, I, 6, I, 7, I, 8, I, 9, I, 10, I ],
+				[ 0, I, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7 ],
+				[ 0, I, 1, 1, 2, 1, 2, 2, 2, 3, 2, 3, 3, 3, 4, 3, 4, 4, 4, 5, 4, 5 ],
+				[ 0, I, 1, 1, 2, 1, 2, 1, 2, 2, 2, 3, 2, 3, 2, 3, 3, 3, 4, 3, 4, 3 ],
+			],
+			minimal_coins_count: 3,
+		};
+
+		it('coin_change_combinations is correct', function() {
+			let result = coin_change_combinations(coin_values, target_value);
+			assert.deepStrictEqual(result, expected_result.combinations_matrix);
+		});
+
+		it('coin_change_combinations (recursive) is correct', function() {
+			let result = coin_change_combinations_recursive(coin_values, target_value);
+			assert.strictEqual(result, expected_result.combinations_count);
+		});
+
+		it('coin_change_minimal_coins is correct', function() {
+			let result = coin_change_minimal_coins(coin_values, target_value);
+			assert.deepStrictEqual(result, expected_result.minimal_coins_matrix);
+		});
+
+		it('coin_change_minimal_coins (recursive) is correct', function() {
+			let result = coin_change_minimal_coins_recursive(coin_values, target_value);
+			assert.strictEqual(result, expected_result.minimal_coins_count);
+		});
+	});
+	describe('sum_of_subsets', function() {
+		let {
+			sum_of_subsets_combinations,
+		} = require('../dynamic_programming/sum_of_subsets');
+
+		let values = [-7, -3, -2, +5, +8];
+
+		let expected_result = {
+			dp_possible: [
+				[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+				[ 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+				[ 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+				[ 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+				[ 1, 0, 1, 1, 0, 2, 0, 2, 1, 1, 2, 0, 2, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ],
+				[ 1, 0, 1, 1, 0, 2, 0, 2, 2, 1, 3, 1, 2, 2, 1, 3, 1, 2, 2, 0, 2, 0, 1, 1, 0, 1 ],
+			],
+			index_offset: 12,
+		};
+
+		it('sum_of_subsets_combinations is correct', function() {
+			let result = sum_of_subsets_combinations(values);
+			assert.strictEqual(result.index_offset, expected_result.index_offset);
+			assert.deepStrictEqual(result.dp_possible, expected_result.dp_possible);
+		});
+	});
 });
