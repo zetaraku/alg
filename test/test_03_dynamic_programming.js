@@ -119,6 +119,52 @@ describe('chap.03 dynamic_programming', function() {
 			});
 		});
 	});
+	describe('bellman_ford_alg', function() {
+		let {
+			bellman_ford_alg_1,
+			NegativeCycleDetectedException,
+		} = require('../dynamic_programming/bellman_ford_alg');
+
+		describe('without negative cycle', function() {
+			let adj_matrix = [
+				[0, 1, I, 1, 5],
+				[9, 0, 3, 2, I],
+				[I, I, 0, 4, I],
+				[I, I, 2, 0, 3],
+				[3, I, I, I, 0],
+			];
+
+			let expected_result = [
+				[0, 1, 3, 1, 4],
+				[8, 0, 3, 2, 5],
+				[10, 11, 0, 4, 7],
+				[6, 7, 2, 0, 3],
+				[3, 4, 6, 4, 0],
+			];
+
+			it('alg 1 correct', function() {
+				for (let i = 0; i < adj_matrix.length; i++) {
+					let result = bellman_ford_alg_1(adj_matrix, i);
+					assert.deepStrictEqual(result, expected_result[i]);
+				}
+			});
+		});
+		describe('with negative cycle', function() {
+			let adj_matrix = [
+				[ I, 2, 1, I, I ],
+				[ -2, I, I, 1, I ],
+				[ I, I, I, 1, I ],
+				[ -10, -1, I, I, I ],
+				[ I, I, I, -1, I ],
+			];
+
+			it('alg 1 detected negative cycle', function() {
+				for (let i = 0; i < adj_matrix.length; i++) {
+					assert.throws(() => bellman_ford_alg_1(adj_matrix, i), NegativeCycleDetectedException);
+				}
+			});
+		});
+	});
 	describe('consecutive_matrix_multiplication', function() {
 		let {
 			consecutive_matrix_multiplication,
