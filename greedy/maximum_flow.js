@@ -7,7 +7,8 @@ function find_maximum_flow(flow_network_capacity, source, sink) {
 
 	let current_flow_value = 0;
 	let current_flow = createNDimArray([n, n], 0);
-	let residual_capacity = copyNDimArray(flow_network_capacity);	// available move capacity, including go-back
+	// available move capacity, including go-back
+	let residual_capacity = copyNDimArray(flow_network_capacity);
 
 	while(true) {
 		let augment_path = find_augment_path();
@@ -45,10 +46,12 @@ function find_maximum_flow(flow_network_capacity, source, sink) {
 
 					prev_link[v] = u;
 
-					if(v === sink)
+					if(v === sink) {
+						processing_queue.length = 0;	// clear the queue to stop processing
 						break;
 				}
 			}
+		}
 		}
 
 		if(!traveled_nodes.has(sink))
@@ -64,7 +67,7 @@ function find_maximum_flow(flow_network_capacity, source, sink) {
 		}
 
 		return {
-			edges: edges,
+			edges,
 			min_flow: edges.reduce((acc, {u, v}) => Math.min(acc, residual_capacity[u][v]), +Infinity),
 		};
 	}

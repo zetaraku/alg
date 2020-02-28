@@ -1,16 +1,18 @@
 const assert = require('assert');
 const { createNDimArray } = require('../util/ndim_arr');
+const I = Infinity;
+const U = undefined;
 
 describe('chap.04 greedy', function() {
 	describe('prim_alg', function() {
 		let { prim_alg } = require('../greedy/prim_alg');
 
 		let adj_matrix = [
-			[0, 1, 3, Infinity, Infinity],
-			[1, 0, 3, 6, Infinity],
+			[0, 1, 3, I, I],
+			[1, 0, 3, 6, I],
 			[3, 3, 0, 4, 2],
-			[Infinity, 6, 4, 0, 5],
-			[Infinity, Infinity, 2, 5, 0],
+			[I, 6, 4, 0, 5],
+			[I, I, 2, 5, 0],
 		];
 
 		let expected_result = {
@@ -41,11 +43,11 @@ describe('chap.04 greedy', function() {
 		let { kruskal_alg } = require('../greedy/kruskal_alg');
 
 		let adj_matrix = [
-			[0, 1, 3, Infinity, Infinity],
-			[1, 0, 3, 6, Infinity],
+			[0, 1, 3, I, I],
+			[1, 0, 3, 6, I],
 			[3, 3, 0, 4, 2],
-			[Infinity, 6, 4, 0, 5],
-			[Infinity, Infinity, 2, 5, 0],
+			[I, 6, 4, 0, 5],
+			[I, I, 2, 5, 0],
 		];
 
 		let expected_result = {
@@ -77,10 +79,10 @@ describe('chap.04 greedy', function() {
 
 		let adj_matrix = [
 			[0, 7, 4, 6, 1],
-			[Infinity, 0, Infinity, Infinity, Infinity],
-			[Infinity, 2, 0, 5, Infinity],
-			[Infinity, 3, Infinity, 0, Infinity],
-			[Infinity, Infinity, Infinity, 1, 0],
+			[I, 0, I, I, I],
+			[I, 2, 0, 5, I],
+			[I, 3, I, 0, I],
+			[I, I, I, 1, 0],
 		];
 
 		let expected_result = {

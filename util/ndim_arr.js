@@ -12,7 +12,7 @@ function createNDimArray([firstDim, ...restDims], defaultValue) {
 
 function copyNDimArray(nDimArray) {
 	if(nDimArray instanceof Array) {
-		return nDimArray.map((e) => copyNDimArray(e))
+		return nDimArray.map(e => copyNDimArray(e));
 	} else {
 		return nDimArray;
 	}
