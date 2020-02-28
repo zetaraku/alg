@@ -167,37 +167,101 @@ describe('chap.04 greedy', function() {
 	describe('maximum_flow', function() {
 		let {
 			find_maximum_flow,
+			find_maximum_flow_by_labeling,
 			find_maxflow_with_mincost,
 		} = require('../greedy/maximum_flow');
 
-		let n = 5;	// node count
-
-		let edges = [
-			{ from: 0, to: 1, capacity: 10, cost: 2 },
-			{ from: 0, to: 2, capacity: 10, cost: 1 },
-			{ from: 0, to: 3, capacity: 10, cost: 10 },
-			{ from: 1, to: 3, capacity: 10, cost: 1 },
-			{ from: 2, to: 3, capacity: 10, cost: 1 },
-			{ from: 3, to: 4, capacity: 15, cost: 1 },
+		let test_cases = [
+			{
+				node_count: 5,
+				source: 0, sink: 4,
+				edges: [
+					{ from: 0, to: 1, capacity: 10, cost: 2 },
+					{ from: 0, to: 2, capacity: 10, cost: 1 },
+					{ from: 0, to: 3, capacity: 10, cost: 10 },
+					{ from: 1, to: 3, capacity: 10, cost: 1 },
+					{ from: 2, to: 3, capacity: 10, cost: 1 },
+					{ from: 3, to: 4, capacity: 15, cost: 1 },
+				],
+				expected_result: {
+					value: 15,
+					cost: 50,
+				},
+			},
+			{
+				node_count: 5,
+				source: 0, sink: 4,
+				edges: [
+					{ from: 0, to: 1, capacity: 2, cost: 1 },
+					{ from: 0, to: 2, capacity: 9, cost: 1 },
+					{ from: 0, to: 3, capacity: 3, cost: 1 },
+					{ from: 1, to: 2, capacity: 7, cost: 1 },
+					{ from: 1, to: 4, capacity: 8, cost: 1 },
+					{ from: 2, to: 1, capacity: 6, cost: 1 },
+					{ from: 2, to: 3, capacity: 4, cost: 1 },
+					{ from: 3, to: 4, capacity: 5, cost: 1 },
+				],
+				expected_result: {
+					value: 13,
+					cost: 34,
+				},
+			},
+			{
+				node_count: 5,
+				source: 0, sink: 4,
+				edges: [
+					{ from: 0, to: 1, capacity: 2, cost: 1 },
+					{ from: 0, to: 2, capacity: 9, cost: 1 },
+					{ from: 0, to: 3, capacity: 3, cost: 1 },
+					{ from: 1, to: 2, capacity: 7, cost: 1 },
+					{ from: 1, to: 4, capacity: 2, cost: 1 },
+					{ from: 2, to: 3, capacity: 2, cost: 1 },
+					{ from: 3, to: 4, capacity: 5, cost: 1 },
+				],
+				expected_result: {
+					value: 7,
+					cost: 16,
+				},
+			},
 		];
 
-		let flow_network_capacity = createNDimArray([n, n], 0);
-		let path_cost = createNDimArray([n, n], +Infinity);
-
-		let source = 0, sink = n-1;
-		for(let edge of edges) {
-			let { from, to, capacity, cost } = edge;
-			flow_network_capacity[from][to] = capacity;
-			path_cost[from][to] = cost;
-		}
-
 		it('should find_maximum_flow', function() {
-			let result = find_maximum_flow(flow_network_capacity, source, sink);
-			assert.strictEqual(result.value, 15);
+			for(let test_case of test_cases) {
+				let { node_count, edges, source, sink, expected_result } = test_case;
+				let { flow_network_capacity } = extract_matrixes(node_count, edges);
+				let result = find_maximum_flow(flow_network_capacity, source, sink);
+				assert.strictEqual(result.value, expected_result.value);
+			}
+		});
+		it('should find_maximum_flow (by labeling)', function() {
+			for(let test_case of test_cases) {
+				let { node_count, edges, source, sink, expected_result } = test_case;
+				let { flow_network_capacity } = extract_matrixes(node_count, edges);
+				let result = find_maximum_flow_by_labeling(flow_network_capacity, source, sink);
+				assert.strictEqual(result.value, expected_result.value);
+			}
 		});
 		it('should find_maxflow_with_mincost', function() {
-			let result = find_maxflow_with_mincost(flow_network_capacity, path_cost, source, sink);
-			assert.strictEqual(result.cost, 50);
+			for(let test_case of test_cases) {
+				let { node_count, edges, source, sink, expected_result } = test_case;
+				let { flow_network_capacity, path_cost } = extract_matrixes(node_count, edges);
+				let result = find_maxflow_with_mincost(flow_network_capacity, path_cost, source, sink);
+				assert.strictEqual(result.cost, expected_result.cost);
+			}
 		});
+
+		function extract_matrixes(node_count, edges) {
+			let n = node_count;
+			let flow_network_capacity = createNDimArray([n, n], 0);
+			let path_cost = createNDimArray([n, n], +Infinity);
+
+			for(let edge of edges) {
+				let { from, to, capacity, cost } = edge;
+				flow_network_capacity[from][to] = capacity;
+				path_cost[from][to] = cost;
+			}
+
+			return { flow_network_capacity, path_cost };
+		}
 	});
 });

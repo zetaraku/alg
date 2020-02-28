@@ -49,9 +49,9 @@ function find_maximum_flow(flow_network_capacity, source, sink) {
 					if(v === sink) {
 						processing_queue.length = 0;	// clear the queue to stop processing
 						break;
+					}
 				}
 			}
-		}
 		}
 
 		if(!traveled_nodes.has(sink))
@@ -71,6 +71,95 @@ function find_maximum_flow(flow_network_capacity, source, sink) {
 			min_flow: edges.reduce((acc, {u, v}) => Math.min(acc, residual_capacity[u][v]), +Infinity),
 		};
 	}
+}
+
+// possible for directed graph
+function find_maximum_flow_by_labeling(flow_network_capacity, source, sink) {
+	const by_increase_input_from = '+', by_decrease_output_to = '-';
+
+	let n = flow_network_capacity.length;
+
+	let current_flow_value = 0;
+	let current_flow = createNDimArray([n, n], 0);
+	let residual_capacity = copyNDimArray(flow_network_capacity);
+
+	while(true) {
+		// compute the labels of the graph
+		let current_label = createNDimArray([n], null); {
+
+			current_label[source] = {
+				potential_outflow: Infinity,
+				target: null,
+			};
+
+			let processing_queue = [source];
+			while(processing_queue.length !== 0) {
+				let u = processing_queue.shift();
+
+				for(let v = 0; v < n; v++) {
+					if(current_label[v] !== null)
+						continue;
+
+					if(residual_capacity[u][v] > 0) {
+						let potential_outflow = Math.min(
+							current_label[u].potential_outflow,
+							residual_capacity[u][v]
+						);
+						current_label[v] = {
+							potential_outflow,
+							method: by_increase_input_from,
+							target: u,
+						};
+					} else if(current_flow[v][u] > 0) {
+						let potential_outflow = Math.min(
+							current_label[u].potential_outflow,
+							current_flow[v][u]
+						);
+						current_label[v] = {
+							potential_outflow,
+							method: by_decrease_output_to,
+							target: u,
+						};
+					} else {
+						continue;
+					}
+
+					// if(v === sink) {
+					// 	processing_queue.length = 0;		// clear the queue to stop processing
+					// 	break;
+					// }
+
+					processing_queue.push(v);
+				}
+			}
+		}
+
+		// break if there is no more possible augment path to the sink
+		if(current_label[sink] === null)
+			break;
+
+		// augment the flow to the sink
+		let deltaFlow = current_label[sink].potential_outflow;
+		let [u, v] = [null, sink];
+
+		while(current_label[v].target !== null) {
+			u = current_label[v].target;
+
+			if(current_label[v].method === by_increase_input_from) {
+				current_flow[u][v] += deltaFlow;
+				residual_capacity[u][v] -= deltaFlow;
+			} else if(current_label[v].method === by_decrease_output_to) {
+				current_flow[v][u] -= deltaFlow;
+				residual_capacity[v][u] += deltaFlow;
+			}
+
+			v = u;
+		}
+
+		current_flow_value += deltaFlow;
+	}
+
+	return { flow: current_flow, value: current_flow_value };
 }
 
 // warn cycle-finding is to be confirmed
@@ -150,5 +239,6 @@ function find_maxflow_with_mincost(flow_network_capacity, flow_network_cost, sou
 
 module.exports = {
 	find_maximum_flow,
+	find_maximum_flow_by_labeling,
 	find_maxflow_with_mincost,
 };
